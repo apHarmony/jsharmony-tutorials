@@ -35,6 +35,6 @@
     "jsharmony": "^1.1.84",
     "jsharmony-db-sqlite": "^1.1.21",
     "jsharmony-factory": "^1.1.42",
-    "lodash": "^4.17.14"
+    "lodash": "^4.17.13"
   }
 }
