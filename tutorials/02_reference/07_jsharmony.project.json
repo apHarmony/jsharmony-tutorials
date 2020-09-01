@@ -63,6 +63,7 @@ It should be saved as "jsharmony.project.json" in the application root.
     },
     
     //Set "execute" permission on the scripts below, and change line endings to local OS
+    //On Linux, scripts will be prepended with the shebang: "#!/usr/bin/env node"
     "executables": [
       "app.js"
     ],
