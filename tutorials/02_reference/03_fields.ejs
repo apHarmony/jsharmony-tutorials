@@ -200,6 +200,11 @@ field := {
                     "onpopup": "console.log('popup');", //(popupmodelid, parentmodelid, fieldid, onComplete)
                     "popupiconstyle": "display:none;",
                   },
+  "hints": true, //Use LOV for hints popup
+  "hints": {
+      "caption": "Available values",
+      "separator": ", ",
+  },
   "default": "USA",
   "default": "js:moment().format()",
   "default": { "sql": "select c_name from c where c_id=@c_id", "sql_params": ["c_id"] }, //"nodatalock":["c_id"] (If applicable)
