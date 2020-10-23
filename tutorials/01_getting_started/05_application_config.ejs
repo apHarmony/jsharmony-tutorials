@@ -315,7 +315,7 @@ config.default_report_fonts = [
     "font-weight": 400,
     "src": "jsharmony/public/fonts/Roboto-Regular.ttf",
     "format": "truetype", //truetype, woff2, woff, embedded-opentype, svg
-    "local": ["Roboto","Roboto-Regular"],
+    "local": ["Roboto","Roboto-Regular"], // (Optional "local" font source - Might cause invalid font on some versions of Chromium)
     "css": "body { font-family: \'Roboto\'; }" //Additional CSS appended to the stylesheet
   }
 ];
@@ -729,6 +729,7 @@ config.debug_params = _.extend(config.debug_params,{
   hide_deprecated: false,                //Do not show messages about deprecated features
   disable_email: false,                  //Disable sending any email messages
   report_debug: false,       //Display report warnings (Null value, etc.)
+  report_interactive: false, //Launch Report Viewer in Interactive Mode - Show Browser in Desktop
   auth_debug: false,         //Debug Login / Authentication, and log hashes
   delay_requests: 0,         //Add a delay of this many milliseconds to all router requests (for testing latency)
 
