@@ -191,6 +191,9 @@ field := {
     //  }
   "lov": { "values": { "ACTIVE": "Active", "CLOSED": "Closed" }, "post_process": "console.log(values);" },
     //"post_process": "jsh.generateLOVTree(values);"   jsh.generateLOVTree(values, { separator: '/', root_txt: '(Root)', default_root: true })
+    //"post_process": "callback(err, rslt); return false;" //For Async operation
+    //Available variables for post_process: jsh, req, values, callback
+    //"values" should be modified as a reference variable for sync call, or returned in callback for async
   "popuplov": {  //Enable POPUPLOV, requires target grid
                     "target":  "J",
                     "code_val": "j_id",

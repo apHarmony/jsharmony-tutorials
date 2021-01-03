@@ -29,6 +29,7 @@ along with this package.  If not, see <http://www.gnu.org/licenses/>.
     "/models/ModelFiles_Form_SeparateFiles.js",
     "/models/ModelFiles_Form_SeparateFiles.css",
     "/models/ModelFiles_Form_SeparateFiles.ejs",
+    "/models/ModelFiles_Form_SeparateFiles.header.ejs",
     "/models/ModelFiles_Form_SeparateFiles.onroute.js",
 
     "/models/ModelFiles_Form_Inline.json",
@@ -47,6 +48,7 @@ along with this package.  If not, see <http://www.gnu.org/licenses/>.
     "/models/ModelFiles_Report_SeparateFiles.js",
     "/models/ModelFiles_Report_SeparateFiles.form.css",
     "/models/ModelFiles_Report_SeparateFiles.form.ejs",
+    "/models/ModelFiles_Report_SeparateFiles.form.header.ejs",
     "/models/ModelFiles_Report_SeparateFiles.onroute.js",
 
     "/models/ModelFiles_Report_Inline.json"
@@ -124,6 +126,9 @@ jsh.App[modelid] = new (function(){
 //MODELID.ejs
 <div class='&lt;%=model.class%&gt;_sample'>Sample div</div>
 
+//MODELID.header.ejs
+<div class='&lt;%=model.class%&gt;_sample'>Sample header</div>
+
 //MODELID.onroute.js
 //Parameters: (routetype, req, res, callback, require, jsh, modelid, params)
 (function(){
@@ -149,6 +154,7 @@ When the models are loaded, the additional JS, CSS, and EJS files are concatenat
   <li><b>MODELID.lib.js</b>: model.jslib </li>
   <li><b>MODELID.css</b>: model.css </li>
   <li><b>MODELID.ejs</b>: model.ejs </li>
+  <li><b>MODELID.header.ejs</b>: model.header </li>
   <li><b>MODELID.onroute.js</b>: model.onroute </li>
 </ul>
 
@@ -298,6 +304,9 @@ jsh.App[modelid] = new (function(){
 //MODELID.form.ejs
 <div class='&lt;%=model.class%&gt;_sample'>Sample div</div>
 
+//MODELID.form.header.ejs
+<div class='&lt;%=model.class%&gt;_sample'>Sample header</div>
+
 //MODELID.onroute.js
 //Parameters: (routetype, req, res, callback, require, jsh, modelid, params)
 (function(){
@@ -325,6 +334,7 @@ When the models are loaded, the additional JS, CSS, and EJS files are concatenat
   <li><b>MODELID.lib.js</b>: model.jslib </li>
   <li><b>MODELID.form.css</b>: model.css </li>
   <li><b>MODELID.form.ejs</b>: model.ejs </li>
+  <li><b>MODELID.form.header.ejs</b>: model.header </li>
   <li><b>MODELID.onroute.js</b>: model.onroute </li>
 </ul>
 

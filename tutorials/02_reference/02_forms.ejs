@@ -123,7 +123,8 @@ model := {
   },
   "helpid": "CL",
   "js": "function(){}", //Custom JS to be included client-side.  Concatenated with model.js
-  "ejs": "HTML CONTENT", //Custom EJS to be included client-side.  Concatenated with model.ejs
+  "header": "HTML CONTENT", //Custom EJS to be included client-side before form / grid.  Concatenated with model.header.ejs
+  "ejs": "HTML CONTENT", //Custom EJS to be included client-side after form / grid.  Concatenated with model.ejs
   "css": "CSS CONTENT",  //Custom CSS to be included client-side.  Concatenated with model.css
   "tabpos": "top", //top,bottm
   "sqlselect": "select fields from table where %%%SQLWHERE%%% %%%DATALOCKS%%% %%%SEARCH%%% order by %%%SORT%%% limit %%%ROWCOUNT%%% offset %%%ROWSTART%%%"
