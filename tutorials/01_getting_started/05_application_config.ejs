@@ -636,11 +636,12 @@ configFactory.help_panelid = "help_target_code";
 <h3 data-level="2">Suggest a Feature</h3>
 <pre>
 //Add a 'Suggest a Feature' button to the top links next to Help/Logout.
-configFactory.feedback.enabled = true;
-configFactory.feedback.email = 'feedback@example.com';
+configFactory.suggest_feature.enabled = true;
+configFactory.suggest_feature.email = 'feedback@example.com';
 </pre>
 
-Feedback is also written to the audit trail log, but you will of course also need to configure <a href="#mailer_settings">mailer settings</a> in order to receive feedback emails.
+<a href="#mailer_settings">Mailer settings</a> will need to be configured in order to receive Suggest a Feature emails.<br/>
+The Suggest a Feature messages are also written to the audit trail.
 
 <h3 data-level="2">Job Processor</h3>
 <pre>
