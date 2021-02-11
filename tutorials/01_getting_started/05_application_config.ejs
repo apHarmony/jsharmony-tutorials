@@ -633,6 +633,15 @@ configFactory.help_view = {
 configFactory.help_panelid = "help_target_code";
 </pre>
 
+<h3 data-level="2">Suggest a Feature</h3>
+<pre>
+//Add a 'Suggest a Feature' button to the top links next to Help/Logout.
+configFactory.feedback.enabled = true;
+configFactory.feedback.email = 'feedback@example.com';
+</pre>
+
+Feedback is also written to the audit trail log, but you will of course also need to configure <a href="#mailer_settings">mailer settings</a> in order to receive feedback emails.
+
 <h3 data-level="2">Job Processor</h3>
 <pre>
 configFactory.JobSleepDelay = 5000;  //Sleep time when between queued jobs (default 5 sec)
