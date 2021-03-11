@@ -41,6 +41,8 @@ sqlobject := {
       "precision": 53, 
       "key": true, 
       "foreignkey": { "table_name": "field_name" }, 
+      "foreignkey": { "table_name": "field_name", "on_delete": "cascade" }, 
+      "foreignkey": { "table_name": "field_name", "on_delete": "null" }, 
       "identity": true, 
       "null": false,
       "unique": true,
@@ -60,7 +62,11 @@ sqlobject := {
     { "columns": ["environment_id"] },
     { "columns": ["environment_id", "series_code"] } //Multi-index
   ],
-  "tables": [ //For views only - used to generate sql statement
+  "sql_create": "...", //Override create statement, or set to empty string to ignore during create
+  "sql_drop": "...", //Override drop statement, or set to empty string to ignore during drop
+
+  //For views only - used to generate sql statement
+  "tables": [ 
     "table1": {
       "columns": [
         "column1",
@@ -77,17 +83,42 @@ sqlobject := {
         "table1.column1", "table2.column1",
         "table1.column2", "table2.column2"
       }
-    }
-  ]
+    },
+    "customsql_table": {
+      "columns": [
+        "custom_column_name",
+      ],
+      "sql": [
+        "select column_expr as custom_column_name from ..."
+      ],
+    },
+  ],
+  //For views only - used to generate sql statement
+  "where": "column1='value1'",
+
+  //Triggers for tables and views:
+  //SQL Server - *AFTER* validate_insert, validate_update, insert, update, delete
+  //PostgreSQL - *BEFORE* validate_insert, validate_update
+  //PostgreSQL - *AFTER* insert, update, delete
+  //SQLite - *BEFORE* validate_insert, validate_update, delete
+  //SQLite - *AFTER* insert, update
   "triggers": [
     { "on": ["update", "insert","delete","validate_insert","validate_update"],
+      "prefix": "{schema}_", //Optional - prefix for trigger name, to create unique standalone trigger
       "exec": [
         "set(branch_mtstmp,jsh.map.timestamp);"
-        //set(field, value)
-        //setif(cond, field, value)
-        //null(value)
-        //errorif(cond, msg)  -- checks condition against inserted table
-        //deleted(col) -- works with errorif - gets value from deleted table
+        //set(field, value)          :: Set field to value
+        //setif(cond, field, value)  :: Set field to value if condition met
+        //update(col)                :: Return true if column value changed
+        //top1(sql)                  :: Returns only first result of SQL expression
+        //null(value)                :: Return true if value is null
+        //errorif(cond, msg)         :: Generate Application Error if condition met
+        //inserted(col)              :: Returns new value of column
+        //deleted(col)               :: Returns previous value of column
+        //with_insert_identity(table, col, insert_statement, ...)
+        //                           :: Insert and get resulting table.col value as @@INSERT_ID for use in the ... statements
+        //increment_changes(cnt)     :: Increment number of modified rowcount by cnt.  Default cnt=1
+        //return_insert_key(tbl, col, sqlwhere) :: Return the inserted key in "instead of" view triggers
       ]
     }
   ],

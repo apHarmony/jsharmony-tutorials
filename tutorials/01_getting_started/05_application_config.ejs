@@ -133,7 +133,8 @@ config.system_settings = {
   },
   //Deprecated Options Backwards Compatibility
   "deprecated": {
-    "disable_button_inheritance": { /* moduleName: true */ } //Disable button inheritance per module. ex: { "application": true }
+    "disable_button_inheritance": { /* moduleName: true */ }, //Disable button inheritance per module. ex: { "application": true }
+    "disable_sqlwhere_on_form_update_delete": false, //Disable auto-adding sqlwhere conditions to update and delete SQL statements
   },
   //Model validation level - "standard", "strict"
   //  Strict: MISSING_CAPTION

@@ -78,7 +78,7 @@ sqlselect
         select [i]fields[/i] from [i]table[/i] %%%SQLSUFFIX%%%
   Form: select [i]fields[/i] from [i]table[/i] where %%%SQLWHERE%%% %%%DATALOCKS%%% and [i]key=@key[/i]
   Form-m: select [i]fields[/i] from [i]table[/i] where %%%SQLWHERE%%% %%%DATALOCKS%%% and [i]key=@key[/i] order by %%%SORT%%%
-  Multisel: select [i]fields[/i] from [i]table[/i] full outer join (%%%LOVSQL%%%) multiparent ... where 1=1 %%%DATALOCKS%%%
+  Multisel: select [i]fields[/i] from [i]table[/i] full outer join (%%%LOVSQL%%%) multiparent ... where %%%SQLWHERE%%% %%%DATALOCKS%%%
 sqlrowcount
   select count(*) as cnt from [i]table[/i] where %%%SQLWHERE%%% %%%DATALOCKS%%% %%%SEARCH%%%
   ** or **
@@ -88,13 +88,13 @@ sqlinsert
 sqlinsertencrypt
   update [i]table[/i] set [i]field=@field[/i] where 1=1 %%%DATALOCKS%%% and [i]key=@key[/i]
 sqlupdate
-  Form: update [i]table[/i] set [i]field=@field[/i] where 1=1 %%%DATALOCKS%%% and [i]key=@key[/i]
-  Multisel: delete from [i]table[/i] where and [i]key=@key[/i] and [i]field[/i] not in (...) %%%DATALOCKS%%%
-            insert into [i]table[/i] select from %%%LOVSQL%%% where [i]field[/i] in (...) and [i]field[/i] not in (...) %%%DATALOCKS%%%
+  Form: update [i]table[/i] set [i]field=@field[/i] where (%%%SQLWHERE%%%) %%%DATALOCKS%%% and [i]key=@key[/i]
+  Multisel: delete from [i]table[/i] where (%%%SQLWHERE%%%) and [i]key=@key[/i] and [i]field[/i] not in (...) %%%DATALOCKS%%%
+            insert into [i]table[/i] select from %%%LOVSQL%%% where [i]field[/i] in (...) and [i]field[/i] not in (... where (%%%SQLWHERE%%%)) %%%DATALOCKS%%%
 sqldelete
-  delete from [i]table[/i] where 1=1 %%%DATALOCKS%%% and [i]key=@key[/i]
+  delete from [i]table[/i] where (%%%SQLWHERE%%%) %%%DATALOCKS%%% and [i]key=@key[/i]
 sqldownloadselect
-  select [i]fields[/i] from [i]table[/i] where 1=1 %%%DATALOCKS%%% and [i]key=@key[/i]
+  select [i]fields[/i] from [i]table[/i] where (%%%SQLWHERE%%%) %%%DATALOCKS%%% and [i]key=@key[/i]
 sqlexec
   %%%DATALOCKS%%%
 

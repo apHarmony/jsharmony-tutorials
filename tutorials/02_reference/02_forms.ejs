@@ -136,7 +136,8 @@ model := {
   "sqldelete": "delete from table where 1=1 %%%DATALOCKS%%% and key=@key",
   "sqlexec": "exec dbo.PLE_NOTIF @cust_id,@MDate", //Used by EXEC.  Be sure to add %%%DATALOCKS%%% if applicable
   "sqltype": "multirecordset", //recordset, multirecordset  Used by EXEC.
-  "sqlwhere": "CUST_STS='ACTIVE'", //Additional search query for grid
+  "sqlwhere": "CUST_STS='ACTIVE'", //Additional static "where" condition
+  "sqlwhere_disabled_on_insert": false, //Specify that the sqlwhere condition will not be used in Insert statements
   "sqlgetinsertkeys": "select scope_identitiy() as CHG_ID;",
   "onload": "_this.onload(xmodel,callback)", //Executed once all selects are complete, on every reselect.  
                                              //Return false to not bubble
