@@ -108,6 +108,7 @@ field := {
                   {"item_context_menu": [ //tree params - Context Menu for an Item
                       { "icon": "insert", "text": "Add", "command": "XExt.Alert('insert' + context_item);", "actions": "IUD", "onrender": "(context_item, data) /* JS */ return false to hide;" }
                     ],
+                    "item_dropdown": { caption: "Actions" }, //Display button next to each selected item with the context menu as a dropdown
                     "expand_all": false, //Show nodes expanded by default
                     "expand_to_selected": true, //Defaults to true
                     "lazy_render": false, //Render nodes as needed, instead of up-front
