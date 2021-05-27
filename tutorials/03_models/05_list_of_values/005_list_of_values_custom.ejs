@@ -63,7 +63,7 @@ The custom SQL list of values are defined as follows:
   "nodatalock":["<i>field.name</i>"],  //Do not apply datalocks for these datalock ids, if applicable
 
   "sqlselect": "...", //SQL statement included as part of the MODEL SQL select statement, to get the display text for the current code value
-  "sqltruncate": "...", //xxxxxxxxxxxxxxxxxx
+  "sqltruncate": "...", //SQL condition to limit the list to one entry for exact match - @parameter = field.name
   "always_get_full_lov": false, //Whether to NOT truncate the list to the current value for: "B", readonly, or query-string defined field values
 
   "db": "<i>default</i>" //Name of the dbconfig to use for the SQL operations
