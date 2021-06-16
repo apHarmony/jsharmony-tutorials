@@ -623,13 +623,13 @@ Examples
 <h3 data-level="2">Extension (File Validator)</h3>
 The "Extension" validator checks that an uploaded file has a valid extension.  File extension validation is case-insensitive.  There is one required parameter:
 <ul>
-  <li>file_extensionENSIONS - An array of possible file extensions.  A period "." is required before each extension.</li>
+  <li>FILE_EXTENSIONS - An array of possible file extensions.  A period "." is required before each extension.</li>
 </ul>
 The Extension validator will return a success both if the file is not uploaded, or if the file has the correct extension.  Extension must be combined with the Required validator to ensure that the file has both been uploaded and has the correct extension.
 <pre>
 Syntax
 ------
-• Extension:file_extensionENSIONS
+• Extension:FILE_EXTENSIONS
 
 Examples
 --------
