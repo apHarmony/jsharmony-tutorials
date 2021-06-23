@@ -4,26 +4,36 @@
 
 jsHarmony Tutorials Collection
 
+## Prerequisites
+
+* Node.js
+
 ## Installation
 
-npm install jsharmony-tutorials --save
+1. Install the jsHarmony CLI, if not already installed
+   ````
+   npm install -g jsharmony-cli
+   ````
+   
+2. Create an empty folder for the project
+   ````
+   mkdir jshtutorials
+   cd jshtutorials
+   ````
+   
+3. Install jsharmony-tutorials:
+   ````
+   jsharmony create tutorials
+   ````
+   This will download the tutorials and install in the current folder
 
-## Usage
-
-Run the following command in the jsHarmony CLI (jsharmony-cli):
-
-```
-jsharmony create tutorials
-```
-
-Or, alternatively, create an app.config.js / app.config.local.js and initialize the tutorials manually via:
-
-```javascript
-var jsHarmonyTutorials = require('jsharmony-tutorials');
-var jsh = new jsHarmonyTutorials.Application();
-jsh.Run();
-```
-
-## Release History
-
-* 1.0.0 Initial release
+   If jsharmony doesn't run, ensure the Node.js npm folder is in your system PATH variable.
+   
+4. Start the tutorials by running:
+   ````
+   nstart.cmd
+   -- or --
+   node app.js
+   ````
+  
+5. Browse to http://localhost:8080
