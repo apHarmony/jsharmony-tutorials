@@ -297,6 +297,12 @@ config.onServerReady = [
   function(callback, servers){ return callback(); }
 ];
 
+//Array of functions to be executed when a client subscribes to a jsHarmony queue.  Ensure "callback();" is called after each function
+//This hook can be used to initialize the database
+config.onQueueSubscribe = [
+  function(callback, req, res, queueid){ return callback(); }
+];
+
 //Additional CSS files merged into application.css
 config.css_extensions = [
   path.dirname(module.filename) + '/public/jquery-ui/css/jquery-ui-1.10.3.custom.min.css',
