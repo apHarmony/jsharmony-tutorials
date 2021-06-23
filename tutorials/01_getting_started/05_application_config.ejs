@@ -298,7 +298,7 @@ config.onServerReady = [
 ];
 
 //Array of functions to be executed when a client subscribes to a jsHarmony queue.  Ensure "callback();" is called after each function
-//This hook can be used to initialize the database
+//This hook can be used to dynamically add queues or perform additional authentication
 config.onQueueSubscribe = [
   function(callback, req, res, queueid){ return callback(); }
 ];
