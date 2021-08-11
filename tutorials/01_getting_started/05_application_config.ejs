@@ -597,13 +597,16 @@ site.auth = {
 
 
 
-<h3 data-level="2">Public / Private Apps</h3>
+<h3 data-level="2">Public Apps, Private Apps, Catchall Apps</h3>
 <pre>
 //System-wide public Express routes
 site.public_apps.push({'/public_page': function(req, res, next){ res.send('Public Page'); }});
 
 //System-wide private Express routes (requiring login)
 site.private_apps.push({'/private_page': function(req, res, next){ res.send('Private Page'); }});    
+
+//System-wide private Catchall routes (requiring login)
+site.catchall_apps.push({'*': function(req, res, next){ res.send('Catchall Page'); }});    
 </pre>
 
 
