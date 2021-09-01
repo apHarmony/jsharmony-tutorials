@@ -141,7 +141,7 @@ model := {
   "sqlgetinsertkeys": "select scope_identitiy() as CHG_ID;",
   "onload": "_this.onload(xmodel,callback)", //Executed once all selects are complete, on every reselect.  
                                              //Return false to not bubble
-                                             //  If not bubbling, execution is puled away from main thread
+                                             //  If not bubbling, execution is pulled away from main thread
                                              //  If returning false, call jsh.ResetLinks() on completion, followed by callback
   "onloadimmediate": "_this.onloadimmediate(xmodel)", //Runs immediately once select is complete, instead of when all selects are complete for all subforms
   "oninit": "_this.oninit(xmodel)", //(Executed when form is first loaded)
