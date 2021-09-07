@@ -153,8 +153,10 @@ field := {
   "link": "update:CW",     //for grid, "insert:", "browse":, "select", "url:", "download:"...also added tab syntax: "update:JW&tabs={\"JW\":\"J_QUICK\"}"
   "onchange": "console.log(JSON.stringify(obj));console.log(newval);XExt.Alert('test'); undoChange();",//JavaScript Event Handler for onchange event
     //onchange(obj,newval,undoChange,e)
-  "ongetvalue": "return jsh._GET['E_ID'];", //JavaScript Event Handler that fire when "GetValue" is called - before field is sent to the database
+  "ongetvalue": "return jsh._GET['E_ID'];", //JavaScript Event Handler that fires when "GetValue" is called - before field is sent to the database
     //ongetvalue(val,field,xmodel,jctrl,parentobj)
+  "ondisabled": "console.log(obj.id);", //function(obj){}  JavaScript Event Handler that fires when XPage.Disable is called on the object
+  "onenabled": "console.log(obj.id);", //function(obj){}  JavaScript Event Handler that fires when XPage.Enable is called on the object
   "password": "E_SSN", // For type=encascii
   "salt": "E_SSNHASH", // For type=hash
   "roles": {"CX_X": ""}, //"" to remove actions, * for all actions, else BIUD
