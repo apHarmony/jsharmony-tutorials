@@ -602,11 +602,17 @@ site.auth = {
 //System-wide public Express routes
 site.public_apps.push({'/public_page': function(req, res, next){ res.send('Public Page'); }});
 
+//System-wide private-optional Express routes (similar to public, however rendered using the logged-in template, if logged-in)
+site.privateoptional_apps.push({'/privateoptional_page': function(req, res, next){ res.send('Private-Optional Page'); }});
+
 //System-wide private Express routes (requiring login)
 site.private_apps.push({'/private_page': function(req, res, next){ res.send('Private Page'); }});    
 
 //System-wide private Catchall routes (requiring login)
-site.catchall_apps.push({'*': function(req, res, next){ res.send('Catchall Page'); }});    
+site.catchall_apps.push({'*': function(req, res, next){ res.send('Catchall Page'); }});
+
+//The routes above also support regular expressions using the "regex:" prefix:
+site.public_apps.push({'regex:public.*': function(req, res, next){ res.send('Public Page'); }});
 </pre>
 
 
