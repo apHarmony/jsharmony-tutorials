@@ -202,7 +202,7 @@ In grid and multisel layouts, the "blockstyle" and "blockclass" properties are n
 </pre>
 <%-getScreenshot('jsHarmonyTutorials/ModelStyle_blockstyle_form?cust_id=1&action=update&popup=1','Model Style - blockstyle - form')%>
 
-<h3 data-level="2">Line Breaks - field.nl / field.eol / field.block / model.onecolumn</h3>
+<h3 data-level="2">Line Breaks - field.nl / field.eol / field.block / field.nowrap / model.onecolumn</h3>
 Line breaks can be added to fields using either the field.nl or field.eol properties.
 <pre>
 //Field properties
@@ -215,6 +215,12 @@ Line breaks can be added to fields using either the field.nl or field.eol proper
 //End of Line
 {
   "eol": true //Insert a line break after this field
+}
+
+//No Wrap
+{
+  "nowrap": true //Prevent a line-break between the caption and field
+  // The nowrap property can be set to true, false, or "auto" (default)
 }
 </pre>
 The field.block property will add a "div" wrapper around the field and caption, effectively adding a line-break before and after the field.  The field.block property will also squash / ignore the next field's "field.nl" property.
