@@ -47,6 +47,7 @@ model := {
   "menu":"reports",
 
   //Reports have the following additional properties
+  "format": "pdf", //pdf or xlsx
   "description": "Report Description",
   "template": "canonical_report.ejs", //Report source HTML/EJS template
   "pagesettings":  { //Any custom pagesettings
@@ -94,6 +95,12 @@ model := {
   //Code to disable an element if its value has been set in the query string
   "onload": "if(xmodel.controller.form.Data.cust_id){ jsh.XPage.Disable(jsh.$root('.cust_id.xelemreports_REPORTNAME')); }",
   //onload,oninit,oninsert
+  //For onrender / onrendered:
+  //  If model.format=pdf, report = { page, content { header, body, footer } , data, params }
+  //  If model.format=xlsx, report = { workbook, data, params }
+  "onrendered": "_this.onrender(report, callback, require, jsh, modelid)", //Server-side function called after data is available, before rendering
+                                                                           //  Return cancelRender=true in callback(err, cancelRender) to override rendering
+  "onrendered": "_this.onrendered(report, callback, require, jsh, modelid)", //Server-side function called after rendering complete, before generating PDF or returning file to the user
   //Page header can contain styles and images, and refer to the page number.  Any image used in the header must be also included in the report body.  Set body image style to "display:none" if necessary.
   "pageheader" : "<h3 style=\"font-size:20px;font-family:'Roboto';\"><center>&lt;%=data.GPP[0].gpp_name%&gt;<img width='200' style='position:fixed;right:-0px;top:-12px;' src='file:&lt;%='/'+'/'+'/'%&gt;&lt;%=jsh.Config.datadir%&gt;../public/images/logo.png' align='right' /></center></h3>",
   //Page footer is similar to the page header.  Refer to page numbers with &lt;%-pageNum%&gt; of &lt;%-numPages%&gt; max pages.
