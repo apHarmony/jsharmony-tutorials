@@ -102,6 +102,9 @@ model := {
                                                                            //  Return cancelRender=true in callback(err, cancelRender) to override rendering
   "onrendered": "_this.onrendered(report, callback, require, jsh, modelid)", //Server-side function called after rendering complete, before generating PDF or returning file to the user
   //Page header can contain styles and images, and refer to the page number.  Any image used in the header must be also included in the report body.  Set body image style to "display:none" if necessary.
+  "ongetfilename": "return callback('filename.pdf');", //Server-side function to set the report filename
+  //Parameters: callback, model, Q, P, req, dbdata
+  //Return callback(new_filename)   Return callback(null) to use default filename
   "pageheader" : "<h3 style=\"font-size:20px;font-family:'Roboto';\"><center>&lt;%=data.GPP[0].gpp_name%&gt;<img width='200' style='position:fixed;right:-0px;top:-12px;' src='file:&lt;%='/'+'/'+'/'%&gt;&lt;%=jsh.Config.datadir%&gt;../public/images/logo.png' align='right' /></center></h3>",
   //Page footer is similar to the page header.  Refer to page numbers with &lt;%-pageNum%&gt; of &lt;%-numPages%&gt; max pages.
   "pagefooter" : "<p align='center' style=\"font-family:'Roboto';\">Page Footer &lt;%-pageNum%&gt; / &lt;%-numPages%&gt;</p>",
