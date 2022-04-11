@@ -68,7 +68,8 @@ The following validators are available:
   "RegEx:'/regex/','be a correct value.'",  //Parameters: 'REGULAR_EXPRESSION','ERROR_MESSAGE_SUFFIX'
   "IsEmail", 
   "IsDate", 
-  "IsDate:'YYYYMMDD'",    //Parameter: FORMAT (moment.js syntax)
+  "IsDate:'YYYYMMDD'",      //Parameter: FORMAT (moment.js syntax)
+  "IsDate:'YYYYMMDD',true", //Parameter: FORMAT,STRICT (only allow date in this exact format)
   "IsSSN",
   "IsEIN",
   "MaxAge:150",           //Parameter: MAXIMUM_AGE_IN_YEARS
@@ -454,12 +455,15 @@ The "IsDate" validator checks that a field is a valid date.<br/>
 </br/>
 IsDate will return a success both if the field is blank or if it is a date.  IsDate must be combined with the Required validator to ensure that the value is both not blank and a date.<br/>
 <br/>
-If a format is specified, it must be in moment.js syntax.
+If a format is specified, it must be in moment.js syntax.<br/>
+<br/>
+The <b>strict</b> parameter is a boolean that restricts the date to a single format
 <pre>
 Syntax
 ------
 • IsDate
 • IsDate:'format'
+• IsDate:'format',strict
 
 Examples
 --------
@@ -467,6 +471,8 @@ Examples
                        //Ex: 5/4/2020
 • "IsDate:'YYYYMMDD'"  //Allow empty strings, standard date strings, and dates in the format YYYYMMDD
                        //Ex: 20200504
+• "IsDate:'YYYYMMDD',true" //Only allow date in YYYYMMDD format
+                           //Ex: 20200504
 </pre>
 
 <h3 data-level="2">IsTime</h3>

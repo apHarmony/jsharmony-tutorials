@@ -98,7 +98,7 @@ model := {
   //For onrender / onrendered:
   //  If model.format=pdf, report = { page, content { header, body, footer } , data, params }
   //  If model.format=xlsx, report = { workbook, data, params }
-  "onrendered": "_this.onrender(report, callback, require, jsh, modelid)", //Server-side function called after data is available, before rendering
+  "onrender": "_this.onrender(report, callback, require, jsh, modelid)", //Server-side function called after data is available, before rendering
                                                                            //  Return cancelRender=true in callback(err, cancelRender) to override rendering
   "onrendered": "_this.onrendered(report, callback, require, jsh, modelid)", //Server-side function called after rendering complete, before generating PDF or returning file to the user
   //Page header can contain styles and images, and refer to the page number.  Any image used in the header must be also included in the report body.  Set body image style to "display:none" if necessary.

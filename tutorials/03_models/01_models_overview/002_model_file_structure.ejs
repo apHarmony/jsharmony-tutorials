@@ -131,6 +131,7 @@ jsh.App[modelid] = new (function(){
 
 //MODELID.onroute.js
 //Parameters: (routetype, req, res, callback, require, jsh, modelid, params)
+//Additional Variables: _SCRIPT_PATH, _SCRIPT_DIR  (path to model.json)
 (function(){
   //Clone the base model
   var model = jsh.getModelClone(req, modelid);

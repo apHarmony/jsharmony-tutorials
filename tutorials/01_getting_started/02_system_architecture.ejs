@@ -172,7 +172,11 @@ Reports consist of two components: the form to enter the report parameters, and 
     <ul>
       <li>
         <div class="url">/_d/_report/:modelid/</div> &nbsp;(GET)<br/>
-        Generates a PDF version of the report via PhantomJS and returns it to the Client
+        Generates a PDF version of the report via Chromium and returns it to the Client
+      </li>
+      <li>
+        <div class="url">/_d/_report_download/:modelid/</div> &nbsp;(GET)<br/>
+        Generates a PDF version of the report via Chromium and returns it to the Client for download
       </li>
       <li>
         <div class="url">/_d/_report_html/:modelid/</div> &nbsp;(GET)<br/>

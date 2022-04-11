@@ -159,6 +159,12 @@ model := {
   "onroute": "_this.onroute(routetype, req, res, f, require, jsh, modelid, params)", //Server-side reroute to different page if necessary, called before any jsHarmony data loaded
     //routetypes: singlepage, model, d, d_transaction, csv, report, d_report, d_report_html, d_reportjob
     //params = { query: {...}, post: {...} }
+  "onsqlinserted": "console.log(sql_rslt); return callback();", //Server-side function, enabling post-processing during API insert operation
+    //Parameters: callback, req, res, sql_params, sql_rslt, require, jsh, modelid
+  "onsqlupdated": "console.log(sql_rslt); return callback();", //Server-side function, enabling post-processing during API update or exec operation
+    //Parameters: callback, req, res, sql_params, sql_rslt, require, jsh, modelid
+  "onsqldeleted": "console.log(sql_rslt); return callback();", //Server-side function, enabling post-processing during API delete operation
+    //Parameters: callback, req, res, sql_params, sql_rslt, require, jsh, modelid
   "nokey": true, //No primary key - only browse
   "nodatalock": ["cust_id"],
   "unbound": true, //Disable any AppSrv operations
