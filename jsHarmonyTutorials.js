@@ -35,6 +35,8 @@ var menu = require('jsharmony-factory/models/_menu.js');
 
 function jsHarmonyTutorials(name){
   var _this = this;
+  jsHarmonyModule.call(this, name);
+  
   if(name) _this.name = name;
   _this.Config = new jsHarmonyTutorialsConfig();
   _this.typename = 'jsHarmonyTutorials';
