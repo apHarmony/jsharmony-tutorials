@@ -203,7 +203,7 @@ Binary is used for storing byte arrays. Length defines the number of bytes in th
 </pre>
 
 <h4>encascii</h4>
-Encascii encrypted the value using AES 128 and stores it as a byte array.  The password property references the password key in the jsHarmony Config.
+Encascii encrypts the value and stores it as a byte array.  The password property references the password key in the jsHarmony Config.
 <pre>
 {
   "type": "encascii",
@@ -214,7 +214,10 @@ Then in models\_config.json:
 <pre>
 {
   "passwords": {
-    "PASSWORD_KEY": "------------------------------------------------------------"
+    "PASSWORD_KEY": {
+      "key": "------------------------------------------------------------",
+      "algorithm": "aes-256-cbc"
+    }
   }
 }
 </pre>

@@ -276,7 +276,10 @@ config.salts = {
 
 //Passwords used by encascii fields to encrypt data
 config.passwords = {
-  "field_name": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  "field_name": {
+    "key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "algorithm": "aes-256-cbc"
+  }
 };
 
 //Array of functions to be executed after jsHarmony config is loaded, before initialization.  Ensure "callback();" is called after each function

@@ -218,6 +218,7 @@ model := {
   "grid_rowcount": true,
   "grid_require_search": true, //Do not initially load results
   "grid_static": true, //Static (uneditable) grid for fast rendering
+  "disable_csv_export": false,
   "duplicate": {"target": "EQUIP_DUPLICATE", "bindings": {"equip_id":"equip_id", "cust_id": "cust_id"},"link_on_success":"update:EW&equip_id=new_equip_id","button_text": "Duplicate Item"},
   "templates": { "grid": ".xgrid_calendar_template" },
   "onecolumn": true, //Add newline (nl) after each form field except the first. (form, form-m)  Automatically align width of captions

@@ -80,10 +80,16 @@ sqlobject := {
         "column4"
       ],
       "join_type": "left",  //left, right, inner
+
       "join_columns": {
         "table1.column1", "table2.column1",
         "table1.column2", "table2.column2"
       }
+      //--or--
+      "join_columns": [
+        "SQL EXPR1",
+        "SQL EXPR2"
+      ]
     },
     "customsql_table": {
       "columns": [
