@@ -33,7 +33,13 @@
     "all_types_x_hash_salt": "92875giaulrnho82q74g5ynwgeoirfh2a35WEF@GA#%Qr9g8124gFwrt#^YRGGHWR145135sadfw5@#$%@#%sf"
   },
   "passwords": {
-    "cust_ein": "sdkjfvhqnw35o3y812jNOFHNOWQIERVNO@Q#N#%O&YNEQHWrjkhwdvherfv23vr2efvewf",
-    "all_types_x_encascii_password": "ewefeihia2gg35A@EFGDt981uxc@Q$^#DGvdscfkwhdkKjhev1kl3j5hdAcdv1V@#$@dwedf@#%@DF"
+    "cust_ein": {
+      "key": "sdkjfvhqnw35o3y812jNOFHNOWQIERVNO@Q#N#%O&YNEQHWrjkhwdvherfv23vr2efvewf",
+      "algorithm": "aes-256-cbc"
+    },
+    "all_types_x_encascii_password": {
+      "key": "ewefeihia2gg35A@EFGDt981uxc@Q$^#DGvdscfkwhdkKjhev1kl3j5hdAcdv1V@#$@dwedf@#%@DF",
+      "algorithm": "aes-256-cbc"
+    }
   }
 }
