@@ -60,8 +60,8 @@ model := {
       write_file (path, text)
       append_file (path, text)
       read_file (path, into, foreach_line)
-      write_csv (path, db, data, sql, headers)
-      append_csv (path, db, data, sql)
+      write_csv (path, db, data, sql, headers, csv_options)
+      append_csv (path, db, data, sql, csv_options)
       read_csv (path, into, foreach_row, headers, pipe, csv_options)
       js (js, cmd, into, foreach) --> update parameters, custom validation, return an array foreach - can return promise for async operations
       shell (path, params, cwd)
