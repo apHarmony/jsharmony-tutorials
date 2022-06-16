@@ -48,22 +48,22 @@ model := {
       //Format { "exec": "...", "param1": "value1", "param2": "value2" }
       //Paths can be absolute, or relative to datadir (except for shell.path - path can be set via cwd)
       /*
-      sql (sql, db, into, foreach_row)
+      sql (sql, db, into, foreach_row, fields)
       sqltrans(db, for)
-      delete_folder (path)
+      delete_folder (path, recursive)
       create_folder (path)
       move_folder (path, dest)
-      list_files (path, into, foreach_file) *** path can be wildcard / regex
+      list_files (path, matching, into, foreach_file) *** matching can be exact match, wildcard, or /regex/
       delete_file (path)
       copy_file (path, dest, overwrite)
       move_file (path, dest, overwrite)
-      write_file (path, text)
+      write_file (path, text, overwrite)
       append_file (path, text)
       read_file (path, into, foreach_line)
-      write_csv (path, db, data, sql, headers, csv_options)
-      append_csv (path, db, data, sql, csv_options)
-      read_csv (path, into, foreach_row, headers, pipe, csv_options)
-      js (js, cmd, into, foreach) --> update parameters, custom validation, return an array foreach - can return promise for async operations
+      write_csv (path, db, data, sql, fields, headers, csv_options)
+      append_csv (path, db, data, sql, fields, headers, csv_options)
+      read_csv (path, into, foreach_row, fields, headers, pipe, csv_options)
+      js (js, into, foreach) --> update parameters, custom validation, return an array foreach - can return promise for async operations
       shell (path, params, cwd)
       email ( email: {to, cc, bcc, subject, text, html, attachments} ) //Attachments = { path: ... }
       email ( jsharmony_txt: {txt_attrib, to, cc, bcc, attachments} )  //Attachments = { path: ... }
