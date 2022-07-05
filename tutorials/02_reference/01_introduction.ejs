@@ -119,6 +119,38 @@ In the example with the two files above, sample.json will resolve to:
 }
 </pre>
 
+<h3 data-level="2">Merge</h3>
+<h4>@merge - JSON Merge</h4>
+<pre>
+//sample.field1
+[
+  { "name": "field1", "value": "value1" }
+]
+
+//sample.field2
+[
+  { "name": "field2", "value": "value2" }
+]
+
+//sample.json
+{
+  "fields": @merge(
+    @importjson("sample.field1")
+    @importjson("sample.field2")
+  )
+}
+
+In the example with the two files above, sample.json will resolve to:
+{
+  "fields": [
+    { "name": "field1", "value": "value1" },
+    { "name": "field2", "value": "value2" }
+  ]
+}
+</pre>
+
+The @merge function will work on arrays, objects, or strings.
+
 
 <h3>Model Inheritance</h3>
 A Form and Report model can inherit all properties from another model, and override / add new values (similar in some ways to class inheritance in C++).<br/>

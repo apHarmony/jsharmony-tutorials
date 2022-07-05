@@ -64,7 +64,8 @@ model := {
       append_csv (path, db, data, sql, fields, headers, csv_options)
       read_csv (path, into, foreach_row, fields, headers, pipe, csv_options)
       js (js, into, foreach) --> update parameters, custom validation, return an array foreach - can return promise for async operations
-      shell (path, params, cwd)
+      shell (path, params, cwd, into, foreach_stdio, foreach_stdio_line, foreach_stderr, foreach_stderr_line)
+      log (path, level, text)  //path can contain %YYYY%MM%DD
       email ( email: {to, cc, bcc, subject, text, html, attachments} ) //Attachments = { path: ... }
       email ( jsharmony_txt: {txt_attrib, to, cc, bcc, attachments} )  //Attachments = { path: ... }
       */
@@ -125,6 +126,14 @@ model := {
         { "exec": "append_file", "path": "sample_task\\jspromise.txt", "text": "Rslt: @jspromise.rslt\n" },
       ] },
       { "exec": "shell", "path": "cmd", "params": ["/c", "echo abc > sample_task\\a.a"] },
+      { "exec": "shell", "path": "cmd", "params": ["/c", "dir"], "into": "dir_output",
+        "foreach_stdio_line": [
+          { "exec": "js", "js": "console.log(params['dir_output.stdio'].value);" },
+        ],
+        "foreach_stderr_line": [
+          { "exec": "log", "level": "error", "text": "@dir_output.stderr" },
+        ],
+      },
       { "exec": "email", "email": { "to": "test@test.com", "subject": "Task Complete", "text": "The task is complete: @cust_id", "attachments": [ { "path": "sample_task\\numbers.csv" } ] } },
       { "exec": "email", "jsharmony_txt": { "txt_attrib": "SAMPLE_EMAIL", "to": "test@test.com", "attachments": [ { "path": "sample_task\\numbers.csv" } ] } },
     ],

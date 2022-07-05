@@ -65,6 +65,11 @@ Front-end and back-end interface definitions are stored in the models folder.  I
     SQL macro definitions.  For cross-database compatibility, macros can target a specific database type via .pgsql.json or .mssql.json file extensions.<br/>
   </li>
   <li>
+    <b>/models/sql/objects/*.json</b><br/>
+    <b>/models/sql/objects/*.simplejson</b><br/>
+    Definitions of <a href="id:reference_sqlobjects">SQL Objects</a>.  Files with the simplejson extension will be parsed using standard JSON.  This can be useful for large files with many rows of data, where the simple JSON interpreter scales faster.
+  </li>
+  <li>
     <b>/models/sql/datatypes.[dbType].json</b><br/>
     The datatypes.pgsql.json and datatypes.mssql.json files can be used to define custom data types.
   </li>
