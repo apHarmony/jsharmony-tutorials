@@ -48,7 +48,7 @@ model := {
       //Format { "exec": "...", "param1": "value1", "param2": "value2" }
       //Paths can be absolute, or relative to datadir (except for shell.path - path can be set via cwd)
       /*
-      sql (sql, db, into, foreach_row, fields)
+      sql (sql, db, into, foreach_row, fields, batch)
       sqltrans(db, for)
       delete_folder (path, recursive)
       create_folder (path)
@@ -80,7 +80,7 @@ model := {
             {"name":"cust_name","type":"varchar","length":255,"validate":["Required"]},
           ],
           "foreach_row":[
-            { "exec": "sql", "sql":"update cust set cust_sts = 'HOLD' where cust_id=@src.cust_id" }, //@parameters - input parameters, fields from each parent row
+            { "exec": "sql", "sql":"update cust set cust_sts = 'HOLD' where cust_id=@src.cust_id", "batch": 100 }, //@parameters - input parameters, fields from each parent row
           ]
         },
       ] },
