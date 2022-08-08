@@ -127,7 +127,7 @@ model := {
   "ejs": "HTML CONTENT", //Custom EJS to be included client-side after form / grid.  Concatenated with model.ejs
   "css": "CSS CONTENT",  //Custom CSS to be included client-side.  Concatenated with model.css
   "tabpos": "top", //top,bottm
-  "sqlselect": "select fields from table where %%%SQLWHERE%%% %%%DATALOCKS%%% %%%SEARCH%%% order by %%%SORT%%% limit %%%ROWCOUNT%%% offset %%%ROWSTART%%%"
+  "sqlselect": "select %%%SQLFIELDS%%% from table where %%%SQLWHERE%%% %%%DATALOCKS%%% %%%SEARCH%%% order by %%%SORT%%% limit %%%ROWCOUNT%%% offset %%%ROWSTART%%%"
   "sqlrowcount": "select count(*) as cnt from table where %%%SQLWHERE%%% %%%DATALOCKS%%% %%%SEARCH%%%",
   "sqldownloadselect": "select fields from table where 1=1 %%%DATALOCKS%%% and key=@key",
   "sqlinsertencrypt": "update table set field=@field where 1=1 %%%DATALOCKS%%% and key=@key",

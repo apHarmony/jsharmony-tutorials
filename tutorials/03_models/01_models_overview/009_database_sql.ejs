@@ -75,7 +75,11 @@ Below is an overview of the SQL expressions that are generated.
 sqlselect
   Grid: select [i]fields[/i] from [i]table[/i] where %%%SQLWHERE%%% %%%DATALOCKS%%% %%%SEARCH%%% order by %%%SORT%%% limit %%%ROWCOUNT%%% offset %%%ROWSTART%%%
         ** or **
+        select %%%SQLFIELDS%%% from [i]table[/i] where %%%SQLWHERE%%% %%%DATALOCKS%%% %%%SEARCH%%% order by %%%SORT%%% limit %%%ROWCOUNT%%% offset %%%ROWSTART%%%
+        ** or **
         select [i]fields[/i] from [i]table[/i] %%%SQLSUFFIX%%%
+        ** or **
+        select %%%SQLFIELDS%%% from [i]table[/i] %%%SQLSUFFIX%%%
   Form: select [i]fields[/i] from [i]table[/i] where %%%SQLWHERE%%% %%%DATALOCKS%%% and [i]key=@key[/i]
   Form-m: select [i]fields[/i] from [i]table[/i] where %%%SQLWHERE%%% %%%DATALOCKS%%% and [i]key=@key[/i] order by %%%SORT%%%
   Multisel: select [i]fields[/i] from [i]table[/i] full outer join (%%%LOVSQL%%%) multiparent ... where %%%SQLWHERE%%% %%%DATALOCKS%%%
@@ -104,6 +108,7 @@ For any models except "exec" models, the %%%SQL%%% variable can be used to prepe
 <h4>model.sqlselect / model.sqlwhere / model.sqlrowcount</h4>
 The "sqlselect" property can be used to override the full select SQL statement.  Since grids implement sorting, search, and paging, the following variables are available:
 <ul>
+  <li>%%%SQLFIELDS%%% - The list of SQL field expressions based on the model fields</li>
   <li>%%%SQLWHERE%%% - The combined model.sqlwhere and field.sqlwhere statements</li>
   <li>%%%DATALOCKS%%% - Datalocks generated for this model</li>
   <li>%%%SEARCH%%% - The search query based on the Grid search</li>
