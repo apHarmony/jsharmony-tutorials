@@ -92,7 +92,7 @@ sqlinsert
 sqlinsertencrypt
   update [i]table[/i] set [i]field=@field[/i] where 1=1 %%%DATALOCKS%%% and [i]key=@key[/i]
 sqlupdate
-  Form: $changes(update %%%TABLE%%% set %%%FIELDS%%% where (%%%SQLWHERE%%%) %%%DATALOCKS%%% %%%KEYS%%%)
+  Form: $getUpdateCount(update %%%TABLE%%% set %%%FIELDS%%% where (%%%SQLWHERE%%%) %%%DATALOCKS%%% %%%KEYS%%%)
         update [i]table[/i] set [i]field=@field[/i] where (%%%SQLWHERE%%%) %%%DATALOCKS%%% and [i]key=@key[/i]
   Multisel: delete from [i]table[/i] where (%%%SQLWHERE%%%) and [i]key=@key[/i] and [i]field[/i] not in (...) %%%DATALOCKS%%%
             insert into [i]table[/i] select from %%%LOVSQL%%% where [i]field[/i] in (...) and [i]field[/i] not in (... where (%%%SQLWHERE%%%)) %%%DATALOCKS%%%
