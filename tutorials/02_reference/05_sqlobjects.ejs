@@ -99,9 +99,25 @@ sqlobject := {
         "select column_expr as custom_column_name from ..."
       ],
     },
+    "table_alias": {
+      "table": "source_table_name",
+    }
   ],
   //For views only - used to generate sql statement
+  "distinct": true,
   "where": "column1='value1'",
+  "group_by": "column1, columm2",
+  "having": "column1='value1'",
+  "order_by": "column1, columm2",
+  "with": {
+    "table_name": "sql_expression"
+  },
+  "with": {
+    "table_name": {
+      "recursive": ["var_name1", "var_name2", ...],
+      "sql": "sql_expression"
+    }
+  },
 
   //Triggers for tables and views:
   //SQL Server - *AFTER* validate_insert, validate_update, insert, update, delete

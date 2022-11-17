@@ -132,7 +132,7 @@ model := {
   "sqldownloadselect": "select fields from table where 1=1 %%%DATALOCKS%%% and key=@key",
   "sqlinsertencrypt": "update table set field=@field where 1=1 %%%DATALOCKS%%% and key=@key",
   "sqlinsert":"insert into %%%TABLE%%%(%%%FIELDS%%%) values(%%%VALUES%%%);%%%GETINSERTKEYS%%%",
-  "sqlupdate": "update table set field=@field where 1=1 %%%DATALOCKS%%% and key=@key",
+  "sqlupdate": "$changes(update %%%TABLE%%% set %%%FIELDS%%% where (%%%SQLWHERE%%%) %%%DATALOCKS%%% %%%KEYS%%%)",
   "sqldelete": "delete from table where 1=1 %%%DATALOCKS%%% and key=@key",
   "sqlexec": "exec dbo.PLE_NOTIF @cust_id,@MDate", //Used by EXEC.  Be sure to add %%%DATALOCKS%%% if applicable
   "sqltype": "multirecordset", //recordset, multirecordset  Used by EXEC.
