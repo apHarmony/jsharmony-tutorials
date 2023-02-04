@@ -694,7 +694,7 @@ exports = module.exports = function(jsh, config, dbconfig){
       return function(_caption, _val, _obj){
         //Do not run the validator if the field is blank
         if((typeof _val == "undefined")||(_val==="")||(_val===null)) return '';
-        //Get the number of works in the string
+        //Get the number of words in the string
         var numWords = _val.toString().trim().split(/\s+/).length;
         //Return an error if the number of words is less than the required number of words
         if(numWords < minWords) return _caption+' must have at least '+minWords+' words.';

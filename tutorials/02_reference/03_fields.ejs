@@ -167,7 +167,7 @@ field := {
     "encode": "js:return (val||'').toString().trim();",
     "decode": "js:return (val||'').toString().trim();"
   },
-  "validate": [ "Required", "MaxLength:5", "MinLength:5", "IsNumeric", "IsNumeric:true" (Only positive), "IsDecimal", "IsDecimal:3" (3 decimal places), "IsDecimalComma:2" (Decimal 2 places with commas), "MaxValue:999", "MinValue:100", "RegEx:'/regex/','be a correct value.'", "IsEmail", "IsDate", "IsDate:'format'", "IsSSN", "Equals:field.name", "Equals:'_obj.fieldname','Caption'", "Equals:5,'Five'" ],
+  "validate": [ "Required", "MaxLength:5", "MinLength:5", "IsNumeric", "IsNumeric:true" (Only positive), "IsDecimal", "IsDecimal:3" (3 decimal places), "IsDecimalComma:2" (Decimal 2 places with commas), "IsFloat", "IsBinary", "IsJSON" "MaxValue:999", "MinValue:100", "RegEx:'/regex/','be a correct value.'", "IsEmail", "IsSSN", "IsEIN", "IsDate", "IsDate:'format'", "IsTime", "IsTime:'HHmm'", "MaxAge:150", "MinAge:21", "IsPhone", "Luhn", "InArray:['VALUE1','VALUE2','VALUE3']" "Equals:field.name", "Equals:'_obj.fieldname','Caption'", "Equals:5,'Five'" ],
   "validate": [ //Alternative extended syntax, array can be mixed with string syntax
     { "actions":"BIUD", "function": "MaxLength:20", "caption": "Customer Name", "selector": ".c_name.xelemC" }, //Each parameter except "function" is optional
     { "actions":"BIUD", "function": "Required", "caption": "Customer Name", "selector": ".c_name.xelemC" }
