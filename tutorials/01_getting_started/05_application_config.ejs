@@ -306,6 +306,9 @@ config.onQueueSubscribe = [
   function(callback, req, res, queueid){ return callback(); }
 ];
 
+//Function hook for overriding the database context
+config.onGetDBContext = function(jsh, req, model, db){ return 'system'; };
+
 //Additional CSS files merged into application.css
 config.css_extensions = [
   path.dirname(module.filename) + '/public/jquery-ui/css/jquery-ui-1.10.3.custom.min.css',
