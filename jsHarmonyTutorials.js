@@ -47,6 +47,7 @@ function jsHarmonyTutorials(name){
   this.tutlisting = [];
   this.tutids = {};
   this.tutmenu = {};
+  this.schema = '';
 }
 
 jsHarmonyTutorials.prototype = new jsHarmonyModule();
