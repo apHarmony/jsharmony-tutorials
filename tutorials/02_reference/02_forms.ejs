@@ -221,6 +221,7 @@ model := {
   "disable_csv_export": false,
   "duplicate": {"target": "EQUIP_DUPLICATE", "bindings": {"equip_id":"equip_id", "cust_id": "cust_id"},"link_on_success":"update:EW&equip_id=new_equip_id","button_text": "Duplicate Item"},
   "templates": { "grid": ".xgrid_calendar_template" },
+  "basetemplate": "mobile", //Alternate render view - file must be in "views\[template_name].ejs"
   "onecolumn": true, //Add newline (nl) after each form field except the first. (form, form-m)  Automatically align width of captions
   "fields": [
     [html]<i><a href="/tutorials/reference_fields">field definition</a></i>[/html]

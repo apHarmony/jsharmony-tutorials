@@ -160,7 +160,7 @@ jsHarmonyTutorials.prototype.getFactoryConfig = function(){
     public_apps: [
       { '*':  express.static(path.join(_this.basepath, 'public')) },
       { '*':  function(req, res, next){
-        if(req.query['popup']) req._override_template = 'popup';
+        if(req.query['popup']) req._override_basetemplate = 'popup';
         return next();
       } },
     ],
