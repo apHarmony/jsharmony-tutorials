@@ -154,6 +154,8 @@ config.valid_extensions = [".jpg", ".jpeg", ".pdf", ".png", ".gif", ".txt", ".xl
 
 //Valid image extensions (for thumbnail resizing)
 config.supported_images = ['.jpg','.jpeg','.gif','.png'];
+//File viewers (when files are accessed with the "view" parameter)
+config.file_viewers = { /* '.ext': function(jsh, req, res, options, fpath, fname){ return false to bypass viewer } */ };
 
 config.appbasepath = path.dirname(require.main.filename); //Path to the application root (containing the models folder)
 config.localmodeldir = config.appbasepath + '/models/';   //The primary local model folder

@@ -57,7 +57,7 @@ Next, the HTML/EJS template needs to be defined.  The EJS uses &lt;% ... %&gt; e
 <pre>
 <div class="xelem&lt;%=model.class%&gt; xgrid_Cust_Listing_placeholder"></div>
 <script class="xgrid_Cust_Listing_template" type="text/x-ejs-template" data-target=".xgrid_Cust_Listing_placeholder">
-  &lt;%% _.each(data, function(row){  %%&gt;
+  &lt;%% _.each(datatable, function(row){  %%&gt;
     <div>&lt;%%=row.cust_name%%&gt;</div>
   &lt;%% }); %%&gt;
 </script>

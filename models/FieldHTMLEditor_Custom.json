@@ -10,7 +10,7 @@
     {"name":"cust_name","caption":"Name"},
     {"name":"cust_desc_editor_type","unbound":true,"control":"dropdown","caption":"Editor Type",
       "lov": { "values": { "TEXT": "Text", "HTML": "HTML" }, "blank": false },"default":"TEXT",
-      "onchange":"_this.cust_desc_editor_type_change(obj,newval,e);"},
+      "onchange":"_this.cust_desc_editor_type_change(obj,newval,undoChange,e);"},
     {"name":"cust_desc","caption":"Description","control":"textarea","controlstyle":"width:500px;height:500px;"}
   ]
 }
