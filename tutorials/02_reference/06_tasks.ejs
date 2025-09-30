@@ -48,7 +48,7 @@ model := {
       //Format { "exec": "...", "param1": "value1", "param2": "value2" }
       //Paths can be absolute, or relative to datadir (except for shell.path - path can be set via cwd)
       /*
-      sql (sql, db, into, foreach_row, fields, batch)
+      sql (sql, db, db_context_user, into, foreach_row, fields, batch, batch_prefix, batch_suffix, batch_glue)
       sqltrans(db, for)
       delete_folder (path, recursive)
       create_folder (path)
@@ -60,14 +60,14 @@ model := {
       write_file (path, text, overwrite)
       append_file (path, text)
       read_file (path, into, foreach_line)
-      write_csv (path, db, data, sql, fields, headers, csv_options)
-      append_csv (path, db, data, sql, fields, headers, csv_options)
+      write_csv (path, db, data, sql, db_context_user, fields, headers, csv_options)
+      append_csv (path, db, data, sql, db_context_user, fields, headers, csv_options)
       read_csv (path, into, foreach_row, fields, headers, pipe, csv_options)
       js (js, into, foreach) --> update parameters, custom validation, return an array foreach - can return promise for async operations
       shell (path, params, cwd, into, foreach_stdio, foreach_stdio_line, foreach_stderr, foreach_stderr_line)
       log (path, level, text)  //path can contain %YYYY%MM%DD
       email ( email: {to, cc, bcc, subject, text, html, attachments} ) //Attachments = { path: ... }
-      email ( jsharmony_txt: {txt_attrib, to, cc, bcc, attachments} )  //Attachments = { path: ... }
+      email ( jsharmony_txt: {txt_attrib, to, cc, bcc, attachments}, db_context_user )  //Attachments = { path: ... }
       */
       //Examples
       { "exec": "sql", "sql": "insert into cust(cust_name, cust_sts) values ('New customer', 'ACTIVE');" },
@@ -81,6 +81,16 @@ model := {
           ],
           "foreach_row":[
             { "exec": "sql", "sql":"update cust set cust_sts = 'HOLD' where cust_id=@src.cust_id", "batch": 100 }, //@parameters - input parameters, fields from each parent row
+            { "exec": "sql", "sql":"(@src.cust_id, @src.cust_name)", "batch": 100, "batch_prefix":"insert into cust_active(cust_id, cust_name) values ", "batch_glue": "," "batch_suffix": ";" }, //@parameters - input parameters, fields from each parent row
+            { "exec": "sql", "batch": 100,
+              "sql": {
+                "name": "cust_active",
+                "columns": [
+                  {"name":"cust_id","type":"bigint", "primary": true, "nullable": false, "identity": true, "readOnly": false},
+                  {"name":"cust_name","type":"varchar","length":255},
+                ]
+              }
+            }, //@parameters - input parameters, fields from each parent row
           ]
         },
       ] },
