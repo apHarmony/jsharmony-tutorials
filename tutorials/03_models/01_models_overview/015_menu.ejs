@@ -40,15 +40,15 @@ The jsHarmony menu system can be most easily leveraged using the jsHarmony Facto
 </ul>
 
 The two-level horizontal menu features a top-level menu, and a sub-menu for each top-level menu:
-<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu', { width: 1050, height: 135 })%>
+<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu', { width: 1050, height: 135, unstable: 'platform' })%>
 
 When more items are displayed than will fit on the screen, "More" side-menus are automatically generated:
 <%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu More', { width:710, height: 135 })%>
-<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu More Expanded', { width:710, onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu More Expanded', { width:710, unstable: 'timestamp', onload:function(){ return new Promise(function(resolve){
   jshInstance.$('.xmenu_more').click()
   return resolve();
 }); } })%>
-<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Sub Menu More Expanded', { width:710, onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Sub Menu More Expanded', { width:710, unstable: 'timestamp', onload:function(){ return new Promise(function(resolve){
   jshInstance.$('.xsubmenu_more').click()
   return resolve();
 }); } })%>
