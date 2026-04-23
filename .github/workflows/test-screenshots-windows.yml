@@ -1,0 +1,34 @@
+name: JsHarmonyTutorials Screenhot Tests Windows
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test-screenshots:
+
+    runs-on: windows-latest
+
+    steps: 
+    - uses: actions/checkout@v4
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+        # cache: 'npm' # requires a package lock checked in
+    - run: choco install -y imagemagick.tool -PackageParameters LegacySupport=true
+    - run: copy test\test-screenshots-config\* .\
+    - name: npm install-test
+      id: test
+      run: npm install-test
+    - uses: actions/upload-artifact@v4
+      if: ${{ failure() && steps.test.conclusion == 'failure' }}
+      with:
+        name: test-screenshots
+        path: |
+          data/test-screenshots/screenshots/
+          data/test-screenshots/diff_screenshots/
+          data/test-screenshots/screenshots.result.html
+        retention-days: 1
