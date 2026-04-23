@@ -48,7 +48,7 @@ model := {
       //Format { "exec": "...", "param1": "value1", "param2": "value2" }
       //Paths can be absolute, or relative to datadir (except for shell.path - path can be set via cwd)
       /*
-      sql (sql, db, db_context_user, into, foreach_row, fields, batch, batch_prefix, batch_suffix, batch_glue)
+      sql (sql, db, db_context_user, into, foreach_row, fields, batch, batch_prefix, batch_suffix, batch_glue, stream)
       sqltrans(db, for)
       delete_folder (path, recursive)
       create_folder (path)
@@ -74,7 +74,7 @@ model := {
       { "exec": "delete_folder", "path": "sample_task", "recursive": true },
       { "exec": "create_folder", "path": "sample_task" },
       { "exec": "sqltrans", "for": [
-        { "exec": "sql", "sql": "select cust_id, cust_name from cust", "into": "src",
+        { "exec": "sql", "sql": "select cust_id, cust_name from cust", "into": "src", "stream": true,
           "fields":[
             {"name":"cust_id","type":"bigint"},
             {"name":"cust_name","type":"varchar","length":255,"validate":["Required"]},
