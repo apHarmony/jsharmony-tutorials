@@ -2,7 +2,7 @@ name: JsHarmonyTutorials Screenhot Tests Linux
 
 on:
   workflow_dispatch:
-    input:
+    inputs:
   #push:
     #branches: [ "master" ]
   #pull_request:
