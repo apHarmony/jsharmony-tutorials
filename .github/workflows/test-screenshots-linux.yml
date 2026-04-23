@@ -1,4 +1,4 @@
-name: JsHarmonyTutorials Screenhot Tests Linux
+name: JsHarmonyTutorials Screenshot Tests Linux
 
 on:
   workflow_dispatch:

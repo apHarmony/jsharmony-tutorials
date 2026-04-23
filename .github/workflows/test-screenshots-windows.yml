@@ -1,4 +1,4 @@
-name: JsHarmonyTutorials Screenhot Tests Windows
+name: JsHarmonyTutorials Screenshot Tests Windows
 
 on:
   push:
