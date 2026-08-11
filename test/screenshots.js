@@ -34,9 +34,12 @@ if(fs.existsSync(app_source_data_dir)) test_data_dir = path.join(app_source_data
 let app_dir =  path.join(test_data_dir,'test-app');
 let app_data_dir = path.join(app_dir,'data');
 let result_file = path.join(test_data_dir,'screenshots.result.html');
-let screenshots_source_dir = path.join(test_dir,'..','public','screenshots');
-let screenshots_generated_dir = path.join(test_data_dir,'screenshots');
-let screenshots_diff_dir = path.join(test_data_dir,'diff_screenshots');
+let screenshots_source_path = path.join('..','..','public','screenshots');
+let screenshots_generated_path = 'screenshots';
+let screenshots_diff_path = 'diff_screenshots';
+let screenshots_source_dir = path.join(test_data_dir,screenshots_source_path);
+let screenshots_generated_dir = path.join(test_data_dir,screenshots_generated_path);
+let screenshots_diff_dir = path.join(test_data_dir,screenshots_diff_path);
 let global_test_state = 'passed';
 
 afterEach(function() {
@@ -159,9 +162,9 @@ function generateFailImagesResultPage(failImages){
     ejs.renderFile(
       path.join(test_dir,'/views/test_results.ejs'),
       {
-        screenshots_source_dir:screenshots_source_dir,
-        screenshots_generated_dir: screenshots_generated_dir,
-        screenshots_diff_dir:screenshots_diff_dir,
+        screenshots_source_dir:screenshots_source_path,
+        screenshots_generated_dir: screenshots_generated_path,
+        screenshots_diff_dir:screenshots_diff_path,
         failImages: failImages,
       },
       {},
