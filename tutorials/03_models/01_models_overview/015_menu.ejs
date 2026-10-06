@@ -40,18 +40,18 @@ The jsHarmony menu system can be most easily leveraged using the jsHarmony Facto
 </ul>
 
 The two-level horizontal menu features a top-level menu, and a sub-menu for each top-level menu:
-<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu', { width: 1050, height: 135, unstable: 'platform' })%>
+<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu', { width: 1050, height: 135 })%>
 
 When more items are displayed than will fit on the screen, "More" side-menus are automatically generated:
 <%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu More', { width:710, height: 135 })%>
-<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu More Expanded', { width:710, unstable: 'timestamp', onload:function(){ return new Promise(function(resolve){
-  jshInstance.$('.xmenu_more').click()
+<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Top Menu More Expanded', { width:710, onload:function(){ return new Promise(function(resolve){
+  jshInstance.XDom('.xmenu_more').emit('click');
   return resolve();
-}); } })%>
-<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Sub Menu More Expanded', { width:710, unstable: 'timestamp', onload:function(){ return new Promise(function(resolve){
-  jshInstance.$('.xsubmenu_more').click()
+}); }, exclude: [{'selector': ".sys_user_etstmp"}] })%>
+<%-getScreenshot('jsHarmonyFactory/Admin/SysUser_Listing','Sub Menu More Expanded', { width:710, onload:function(){ return new Promise(function(resolve){
+  jshInstance.XDom('.xsubmenu_more').emit('click')
   return resolve();
-}); } })%>
+}); }, exclude: [{'selector': ".sys_user_etstmp"}] })%>
 
 <h3>Built-in jsHarmony Factory Menu Administration</h3>
 Menu administration is available in the jsHarmony Factory Developer tab:
@@ -200,7 +200,7 @@ var XMenuHorizontal = function(){ }
 XMenuHorizontal.prototype = new XMenuBase();
 
 //Determine whether the menu is installed on the page  ** Not a prototype function
-XMenuHorizontal.isActive = function(){ return jsh.$root('.xmenuhorizontal').length; }
+XMenuHorizontal.isActive = function(){ return jsh.xd('.xmenuhorizontal').length; }
 
 //Initialize the menu (create internal data structured, if necessary
 XMenuHorizontal.prototype.Init = function(){ }
@@ -215,7 +215,7 @@ XMenuHorizontal.prototype.RefreshLayout = function(){ }
 //Can be used to handle situations such as hiding a popup menu when navigating to a new page
 XMenuHorizontal.prototype.Navigated = function(obj){ }
 
-//Bind the custom menu to the global XMenu handler.  Must be bound before jsHarmony.Init / $(document).ready is called on the client
+//Bind the custom menu to the global XMenu handler.  Must be bound before jsHarmony.Init / XDom.onPageLoad() is called on the client
 XMenu.Interfaces['horizontal'] = XMenuHorizontal;
 </pre>
 

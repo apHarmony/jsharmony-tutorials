@@ -18,7 +18,7 @@ jsh.App[modelid] = new (function(){
     if(cust_desc_editor_type=='HTML'){
       //If we should render an HTML editor
       //Add an "id" attribute to the cust_desc textarea, because it does not have one by default
-      $('.cust_desc.xelem'+xmodel.class).attr('id',xmodel.class+'_cust_desc');
+      jsh.XDom('.cust_desc.xelem'+xmodel.class).attr.id = xmodel.class+'_cust_desc';
       //Initialize the editor on the cust_desc textarea
       XExt.CKEditor(xmodel.class+'_cust_desc');
     }

@@ -179,7 +179,6 @@ For example:
 }
 </pre>
 <%-getScreenshot('jsHarmonyTutorials/ModelDBValidation_ErrorGenerator?action=update&x_primary=1&popup=1','Model DB Validation - model.dberrors', { onload:function(){ return new Promise(function(resolve){
-  var $ = jshInstance.$;
   jshInstance.XModels[jshInstance.XModels_root].set('x_error','db_error_standard')
   jshInstance.XPage.Save();
   jshInstance.XExt.waitUntil(function(){ return jshInstance.xDialog.length; }, resolve);
@@ -189,7 +188,6 @@ For example:
 If the error message string begins with "Application Error - ", the full error message will be returned to the user in a dialog box.  Application Errors are meant to be displayed back through the user interface:
 
 <%-getScreenshot('jsHarmonyTutorials/ModelDBValidation_ErrorGenerator?action=update&x_primary=1&popup=1','Model DB Validation - Application Error', { onload:function(){ return new Promise(function(resolve){
-  var $ = jshInstance.$;
   jshInstance.XModels[jshInstance.XModels_root].set('x_error','application_error')
   jshInstance.XPage.Save();
   jshInstance.XExt.waitUntil(function(){ return jshInstance.xDialog.length; }, resolve);
@@ -200,7 +198,6 @@ If the error message string begins with "Application Error - ", the full error m
 If the error message string begins with "Application Warning - ", the full error message will be returned to the user in a dialog box.  Application Warning are meant to be displayed back through the user interface:
 
 <%-getScreenshot('jsHarmonyTutorials/ModelDBValidation_ErrorGenerator?action=update&x_primary=1&popup=1','Model DB Validation - Application Warning', { onload:function(){ return new Promise(function(resolve){
-  var $ = jshInstance.$;
   jshInstance.XModels[jshInstance.XModels_root].set('x_error','application_warning')
   jshInstance.XPage.Save();
   jshInstance.XExt.waitUntil(function(){ return jshInstance.xDialog.length; }, resolve);
@@ -218,7 +215,6 @@ Execute Form - Sample Execute Form Message //&lt;%=xmodel.namespace%&gt;ModelDBV
 </pre>
 
 <%-getScreenshot('jsHarmonyTutorials/ModelDBValidation_ErrorGenerator?action=update&x_primary=1&popup=1','Model DB Validation - Execute Form', { onload:function(){ return new Promise(function(resolve){
-  var $ = jshInstance.$;
   jshInstance.XModels[jshInstance.XModels_root].set('x_error','execute_form')
   jshInstance.XPage.Save();
   jshInstance.XExt.waitUntil(function(){ return jshInstance.xDialog.length; }, resolve);

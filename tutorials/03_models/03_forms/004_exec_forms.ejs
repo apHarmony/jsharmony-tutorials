@@ -93,9 +93,8 @@ The database calls can consist of any SQL.  If the SQL returns result recordsets
 </pre>
 JavaScript can be used to access the API endpoint:
 <pre>
-$.ajax('/_d/jsHarmonyTutorials/FormExec_API', {
-  type: 'POST',
-  dataType: 'json',
+XExt.Request('/_d/jsHarmonyTutorials/FormExec_API', {
+  method: 'POST',
   success: function(rslt){
     //Handle the resulting JSON data
   }

@@ -93,7 +93,7 @@ model := {
     {"control":"button","value":"Email to Clients","controlstyle": "padding:3px 8px;", "onclick": "jsh.XPage.RunQueue();"}
   ],
   //Code to disable an element if its value has been set in the query string
-  "onload": "if(xmodel.controller.form.Data.cust_id){ jsh.XPage.Disable(jsh.$root('.cust_id.xelemreports_REPORTNAME')); }",
+  "onload": "if(xmodel.controller.form.Data.cust_id){ jsh.XPage.Disable(jsh.xd('.cust_id.xelemreports_REPORTNAME').elements); }",
   //onload,oninit,oninsert
   //For onrender / onrendered:
   //  If model.format=pdf, report = { page, content { header, body, footer } , data, params }

@@ -8,16 +8,20 @@ var SampleApp = function(){
   var jsh = null;
   var XExt = null;
   var XPage = null;
-  var $ = null;
+  var XDom = null;
 
   var CUST_FORM_CONTAINER = '.sample_cust_form_container';
+
+  //Handlers
+  this.onAccept = null;
+  this.onCancel = null;
 
   //Called when jsHarmony is loaded (via querystring parameter to jsHarmony.loader.js)
   this.init = function(_jsh){
     jsh = _jsh;
     XExt = jsh.XExt;
     XPage = jsh.XPage;
-    $ = jsh.$;
+    XDom = jsh.XDom;
 
     jsh.init_complete = true;
   }
@@ -39,7 +43,7 @@ var SampleApp = function(){
     window.onbeforeunload = XExt.chain(window.onbeforeunload, function(){ return XPage.GetChangesMessage('Customer'); });
 
     //Define the form in-memory
-    jsh.XPage.LoadVirtualModel($(CUST_FORM_CONTAINER)[0], {
+    jsh.XPage.LoadVirtualModel(XDom(CUST_FORM_CONTAINER).element, {
       "id": "Customer",
       "layout": "form",
       "unbound": true,
@@ -98,15 +102,21 @@ var SampleApp = function(){
       jsh.XModels['Customer'].controller.Render(_this.cust_data);
 
       //Show popup dialog
-      XExt.CustomPrompt(CUST_FORM_CONTAINER, $(CUST_FORM_CONTAINER),
+      XExt.CustomPrompt(CUST_FORM_CONTAINER, XDom(CUST_FORM_CONTAINER).element,
 
         //Dialog - onInit Handler
-        function(acceptFunc, cancelFunc){
+        function(xDialogObj){
           //Enable the form (so that navigation events trigger check for updates)
           jsh.XModels['Customer'].controller.form.Prop.Enabled = true;
           //Attach save / cancel events to dialog events
-          jsh.$root('.save_button.xelemCustomer').off('click').on('click', acceptFunc);
-          jsh.$root('.cancel_button.xelemCustomer').off('click').on('click', cancelFunc);
+          var xdsavebtn = jsh.xd('.save_button.xelemCustomer');
+          xdsavebtn.off('click', _this.onAccept);
+          _this.onAccept = xDialogObj.acceptfunc;
+          xdsavebtn.on('click', _this.onAccept);
+          var cancelbtn = jsh.xd('.cancel_button.xelemCustomer');
+          cancelbtn.off('click', _this.onCancel);
+          _this.onCancel = xDialogObj.cancelfunc;
+          cancelbtn.on('click', _this.onCancel);
         }, 
 
         //Dialog - onAccept Handler
@@ -124,10 +134,7 @@ var SampleApp = function(){
         function(){
           //Disable the form (so that navigation events do not trigger check for updates)
           jsh.XModels['Customer'].controller.form.Prop.Enabled = false;
-        }, 
-
-        //Dialog Options - Reuse the existing container, so that the form is not rerendered on every popup
-        { reuse: true }
+        }
       );
     });
   }
@@ -139,7 +146,7 @@ window.app = new SampleApp();
 <body style="padding:15px 30px;">
   <input type="button" onclick="app.showPopupForm();" value="Show Popup" />
   <div style='display:none;'>
-    <div class='sample_cust_form_container xdialogbox' style='width:400px;'></div>
+    <div class='sample_cust_form_container xdialogbox' style='width:442px;'></div>
   </div>
 </body>
 </html>

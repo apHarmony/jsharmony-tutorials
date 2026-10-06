@@ -14,7 +14,7 @@ jsh.App[modelid] = new (function(){
     if('Customer' in jsh.XModels) return; //Grid already loaded
 
     //Define the grid in-memory
-    XPage.LoadVirtualModel($('.'+xmodel.class+'_grid_container')[0], {
+    XPage.LoadVirtualModel(jsh.XDom('.'+xmodel.class+'_grid_container').element, {
       "id": "Customer",
       "layout": "grid",
       'title': 'Customers',

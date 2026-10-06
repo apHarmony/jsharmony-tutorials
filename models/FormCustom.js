@@ -12,16 +12,18 @@ jsh.App[modelid] = new (function(){
 
   this.oninit = function(xmodel){
     //Bind event handlers
-    $(document).bind('mousemove', _this.onmousemove);
-    $(document).bind('mouseup', _this.onmouseup);
+    var xdDoc = jsh.XDom(document);
+    xdDoc.on('mousemove', _this.onmousemove);
+    xdDoc.on('mouseup', _this.onmouseup);
     //Load API Data
     this.loadData();
   }
 
   this.ondestroy = function(){
     //Remove any bound event handlers
-    $(document).unbind('mousemove', _this.onmousemove);
-    $(document).unbind('mouseup', _this.onmouseup);
+    var xdDoc = jsh.XDom(document);
+    xdDoc.off('mousemove', _this.onmousemove);
+    xdDoc.off('mouseup', _this.onmouseup);
   }
 
   //Launch Help form
@@ -74,11 +76,11 @@ jsh.App[modelid] = new (function(){
       data.cust_sts.push(_.extend({}, cust_sts, { cust: cust_per_sts }));
     });
     //Render the EJS template
-    var tmpl = jsh.$root('.'+xmodel.class+'_template').html();
-    var jcontainer = jsh.$root('.'+xmodel.class+'_container');
-    jcontainer.html(XExt.renderClientEJS(tmpl, { data: data, _: _, jsh: jsh }));
+    var tmpl = jsh.xd('.'+xmodel.class+'_template').innerHTML;
+    var xdcontainer = jsh.xd('.'+xmodel.class+'_container');
+    xdcontainer.html = XExt.renderClientEJS(tmpl, { data: data, _: _, jsh: jsh });
     //Bind mousedown event for dragging
-    jcontainer.find('.'+xmodel.class+'_customer').mousedown(this.onmousedown_customer);
+    xdcontainer.get('.'+xmodel.class+'_customer').on('mousedown', this.onmousedown_customer);
   }
 
   //Handler for "mousedown" event on a customer element
@@ -86,7 +88,7 @@ jsh.App[modelid] = new (function(){
     if(e.which==1){//left mouse button
       e.preventDefault();
       e.stopPropagation();
-      _this.dragTarget = $(e.target);
+      _this.dragTarget = jsh.XDom(e.target);
       _this.dragType = 'cust';
       _this.dragBegin();
     }
@@ -109,20 +111,18 @@ jsh.App[modelid] = new (function(){
 
   //Mouse Drag - Fired on start of drag event
   this.dragBegin = function(){
-    $('.xcontext_menu').hide();
+    jsh.XDom('.xcontext_menu').style.display = false;
     _this.dragStarted = true;
 
     if(_this.dragType=='cust'){
-      jsh.$root('.'+xmodel.class+'_customer.drag').remove();
-      var jclone = _this.dragTarget.clone();
-      jclone.css({
-        position:'absolute',
-        zIndex: 999,
-        left: jsh.mouseX,
-        top: jsh.mouseY,
-      });
-      jclone.addClass('drag');
-      jsh.root.prepend(jclone);
+      jsh.xd('.'+xmodel.class+'_customer.drag').remove();
+      var xdclone = jsh.XDom(jsh.XDom.render(_this.dragTarget.outerHTML));
+      xdclone.style.position = 'absolute';
+      xdclone.style.zIndex = 999;
+      xdclone.style.left = jsh.mouseX;
+      xdclone.style.top = jsh.mouseY;
+      xdclone.class.add('drag');
+      jsh.xdroot.prepend(xdclone);
     }
   }
 
@@ -132,22 +132,22 @@ jsh.App[modelid] = new (function(){
 
     if(_this.dragType=='cust'){
       //Update dragged object position
-      var jclone = jsh.$root('.'+xmodel.class+'_customer.drag');
-      jclone.css('left', jsh.mouseX);
-      jclone.css('top', jsh.mouseY);
+      var xdclone = jsh.xd('.'+xmodel.class+'_customer.drag');
+      xdclone.style.left = jsh.mouseX;
+      xdclone.style.top = jsh.mouseY;
 
       //Highlight background on target container
       var cust_sts = '';
-      jsh.$root('.'+xmodel.class+'_status_container').each(function(){
-        if(XExt.isMouseWithin(this)){
-          cust_sts = $(this).data('code_val');
+      jsh.xd('.'+xmodel.class+'_status_container').elements.forEach(function(obj){
+        if(XExt.isMouseWithin(obj)){
+          cust_sts = jsh.XDom(obj).data.code_val;
         }
       });
-      if(cust_sts) _this.dragDestination = jsh.$root('.'+xmodel.class+'_status_container[data-code_val='+cust_sts+']');
-      else _this.dragDestination = null;
+      if(cust_sts) _this.dragDestination = jsh.xd('.'+xmodel.class+'_status_container[data-code_val='+cust_sts+']');
+      else _this.dragDestination = jsh.XDom([]);
 
-      jsh.$root('.'+xmodel.class+'_status_container').not(_this.dragDestination).removeClass('highlighted');
-      jsh.$root(_this.dragDestination).addClass('highlighted');
+      jsh.xd('.'+xmodel.class+'_status_container').omit(_this.dragDestination.element).class.remove('highlighted');
+      _this.dragDestination.class.add('highlighted');
     }
   }
 
@@ -156,11 +156,11 @@ jsh.App[modelid] = new (function(){
     if(!_this.dragStarted) return;
 
     if(_this.dragType=='cust'){
-      jsh.$root('.'+xmodel.class+'_customer.drag').remove();
-      jsh.$root('.'+xmodel.class+'_status_container').removeClass('highlighted');
+      jsh.xd('.'+xmodel.class+'_customer.drag').remove();
+      jsh.xd('.'+xmodel.class+'_status_container').class.remove('highlighted');
       if(_this.dragDestination){
-        var cust_id = _this.dragTarget.data('cust_id');
-        var cust_sts = _this.dragDestination.data('code_val');
+        var cust_id = _this.dragTarget.data.cust_id;
+        var cust_sts = _this.dragDestination.data.code_val;
         //Update status
         _this.updateStatus(cust_id, cust_sts); 
       }

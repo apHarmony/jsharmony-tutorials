@@ -34,10 +34,10 @@ The grid will export the data with column headers to a CSV:<br/>
 <div class="GridExport_Cust_Listing_Data"></div>
 <script type="text/javascript">
 (function(jsh){
-  var jobj = jsh.$root('.GridExport_Cust_Listing_Data');
+  var xdobj = jsh.xd('.GridExport_Cust_Listing_Data');
   var _ = jsh._;
   var XExt = jsh.XExt;
-  jobj.empty();
+  xdobj.clear();
   jsh.XForm.prototype.XExecute('jsHarmonyTutorials/GridExport_Cust_Listing',{},function(rslt){
     if(rslt && rslt.GridExport_Cust_Listing){
       var html = '<table border="1" cellpadding="5">';
@@ -46,7 +46,7 @@ The grid will export the data with column headers to a CSV:<br/>
         html += '<tr><td>'+XExt.escapeHTML(item.cust_id)+'</td><td>'+XExt.escapeHTML(item.cust_name)+'</td></tr>';
       });
       html += '</table>';
-      jobj.html(html);
+      xdobj.html = html;
     }
   });
 })(<%=instance%>)

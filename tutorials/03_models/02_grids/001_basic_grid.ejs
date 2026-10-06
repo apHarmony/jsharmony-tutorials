@@ -230,16 +230,18 @@ Advanced sorting, such as always keeping one of the rows on top, can be implemen
 <h3>Searching</h3>
 Searching is automatically added to each grid.  Search the grid by clicking on the "Search" icon.
 <%-getScreenshot('jsHarmonyTutorials/GridBasic_Cust_Listing?popup=1','Grid Searching', { onload:function(){ return new Promise(function(resolve){
-  jshInstance.$('.xsearchbutton').click();
+  jshInstance.XDom('.xsearchbutton').emit('click');
   window.setTimeout(resolve, 1000);
 }); }, beforeScreenshot:function(jsh, page, cb){
   page.click('.xsearch_column').then(cb).catch(function (err) { jsh.Log.error(err); });
 } })%>
 
 <%-getScreenshot('jsHarmonyTutorials/GridBasic_Cust_Listing?popup=1','Grid Searching - ID', { onload:function(){ return new Promise(function(resolve){
-  jshInstance.$('.xsearchbutton').click();
+  jshInstance.XDom('.xsearchbutton').emit('click');
   window.setTimeout(function(){
-    jshInstance.$root('.xsearch_column').val('cust_id').change();
+    var xdxsearch_col = jshInstance.xd('.xsearch_column');
+    xdxsearch_col.value = 'cust_id';
+    xdxsearch_col.emit('change');
     return resolve(); 
   }, 1000);
 }); }, beforeScreenshot:function(jsh, page, cb){
@@ -247,11 +249,15 @@ Searching is automatically added to each grid.  Search the grid by clicking on t
 } })%>
 
 <%-getScreenshot('jsHarmonyTutorials/GridBasic_Cust_Listing?popup=1','Grid Searching - Customer', { onload:function(){ return new Promise(function(resolve){
-  jshInstance.$('.xsearchbutton').click();
+  jshInstance.XDom('.xsearchbutton').emit('click');
   window.setTimeout(function(){
-    jshInstance.$root('.xsearch_column').eq(0).val('cust_id').change();
-    jshInstance.$root('.xsearch_add').click();
-    jshInstance.$root('.xsearch_column').eq(0).val('cust_name').change();
+    var xdxsearch_col = jshInstance.xd('.xsearch_column').first();
+    xdxsearch_col.value = 'cust_id';
+    xdxsearch_col.emit('change');
+    jshInstance.xd('.xsearch_add').emit('click');
+    xdxsearch_col = jshInstance.xd('.xsearch_column').first();
+    xdxsearch_col.value = 'cust_name';
+    xdxsearch_col.emit('change');
     return resolve(); 
   }, 1000);
 }); }, beforeScreenshot:function(jsh, page, cb){

@@ -9,6 +9,7 @@ var HelperFS = require('jsharmony/HelperFS');
 var targetTests = null;
 var fileParams = {};
 var doNotGenerateUnstableImages = false;
+var runUnstableTests = false;
 
 var DO_NO_CLEAN_BEFORE_TEST = false;
 
@@ -22,6 +23,9 @@ for(var i=0;i<process.argv.length;i++){
   }
   if(arg == '--do-not-generate-unstable-images'){
     doNotGenerateUnstableImages = true;
+  }
+  if(arg == '--run-unstable-tests'){
+    runUnstableTests = true;
   }
 }
 
@@ -113,7 +117,7 @@ describe('Compare Screenshots', function() {
     console.log('# of generated images to test '+fs.readdirSync(screenshots_generated_dir).length);
     let failImages = [];
     async.eachLimit(files, 1, function(imageName, file_cb){
-      if(fileParams[imageName] && fileParams[imageName].unstable){
+      if(!runUnstableTests && fileParams[imageName] && fileParams[imageName].unstable){
         console.log('skipping comparison on unstable image: ', imageName);
         return file_cb();
       }
@@ -159,6 +163,8 @@ function generateFailImagesResultPage(failImages){
     ejs.renderFile(
       path.join(test_dir,'/views/test_results.ejs'),
       {
+        fs: fs,
+        path: path,
         screenshots_source_dir:screenshots_source_dir,
         screenshots_generated_dir: screenshots_generated_dir,
         screenshots_diff_dir:screenshots_diff_dir,
@@ -273,8 +279,12 @@ function start_jsHarmony(cb) {
 }
 
 function compareScreenshots(imageName, options) {
+  var img_src_dir = null;
+  var exclude_dir = path.join(screenshots_source_dir, 'exclude_box_screenshots/'+imageName);
+  if(fs.existsSync(exclude_dir)) img_src_dir = exclude_dir;
+  else img_src_dir = path.join(screenshots_source_dir,imageName);
   return gmCompareImagesWrapper(
-    path.join(screenshots_source_dir,imageName),
+    img_src_dir,
     path.join(screenshots_generated_dir,imageName),
     options)
 }

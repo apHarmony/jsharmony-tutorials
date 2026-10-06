@@ -9,7 +9,6 @@ var SampleApp = function(){
   var XExt = null;
   var XPage = null;
   var XForm = null;
-  var $ = null;
 
   var CUST_FORM_CONTAINER_CLASS= 'sample_cust_form_container';
   this.namespace = 'jsHarmonyTutorials/';
@@ -21,7 +20,6 @@ var SampleApp = function(){
     XExt = jsh.XExt;
     XPage = jsh.XPage;
     XForm = jsh.XForm;
-    $ = jsh.$;
 
     this.initForm();
   }
@@ -34,7 +32,7 @@ var SampleApp = function(){
     window.onbeforeunload = XExt.chain(window.onbeforeunload, function(){ return XPage.GetChangesMessage('Customer'); });
 
     //Define the form in-memory
-    XPage.LoadVirtualModel($('.'+CUST_FORM_CONTAINER_CLASS)[0], {
+    XPage.LoadVirtualModel(jsh.XDom('.'+CUST_FORM_CONTAINER_CLASS).element, {
       "id": "Customer",
       "layout": "form",
       "unbound": true,

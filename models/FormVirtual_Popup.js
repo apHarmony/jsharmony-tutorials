@@ -5,6 +5,10 @@ jsh.App[modelid] = new (function(){
   this.cust = {};
   this.LOVs = { };
 
+  //Handlers
+  this.onAccept = null;
+  this.onCancel = null;
+
   var CUST_FORM_CONTAINER = '.'+xmodel.class+'_cust_form_container';
 
   this.showPopup_click = function(){
@@ -15,19 +19,25 @@ jsh.App[modelid] = new (function(){
         //Update values in Customer form
         _this.renderCust();
         //Open dialog
-        XExt.CustomPrompt(CUST_FORM_CONTAINER, $(CUST_FORM_CONTAINER), function(acceptFunc, cancelFunc){ //onInit
+        XExt.CustomPrompt(CUST_FORM_CONTAINER, jsh.XDom(CUST_FORM_CONTAINER).element, function(xDialogObj){ //onInit
           //Enable the form (so that navigation events trigger check for updates)
           jsh.XModels['Customer'].controller.form.Prop.Enabled = true;
           //Attach save / cancel events to dialog events
-          jsh.$root('.save_button.xelemCustomer').off('click').on('click', acceptFunc);
-          jsh.$root('.cancel_button.xelemCustomer').off('click').on('click', cancelFunc);
+          var savebtn = jsh.xd('.save_button.xelemCustomer');
+          savebtn.off('click', _this.onAccept);
+          _this.onAccept = xDialogObj.acceptfunc;
+          savebtn.on('click', _this.onAccept);
+          var cancelbtn = jsh.xd('.cancel_button.xelemCustomer');
+          cancelbtn.off('click', _this.onCancel);
+          _this.onCancel = xDialogObj.cancelfunc;
+          cancelbtn.on('click', _this.onCancel);
         }, function(success){ //onAccept
           //Commit customer data to API
           _this.commitCust(success);
         }, undefined, function(){ //onClosed
           //Disable the form (so that navigation events do not trigger check for updates)
           jsh.XModels['Customer'].controller.form.Prop.Enabled = false;
-        }, { reuse: true });
+        });
       });
     });
   }
@@ -39,7 +49,7 @@ jsh.App[modelid] = new (function(){
     if('Customer' in jsh.XModels) return callback(); //Form already loaded
 
     //Define the form in-memory
-    XPage.LoadVirtualModel($(CUST_FORM_CONTAINER)[0], {
+    XPage.LoadVirtualModel(jsh.XDom(CUST_FORM_CONTAINER).element, {
       "id": "Customer",
       "layout": "form",
       "parent": xmodel.id,

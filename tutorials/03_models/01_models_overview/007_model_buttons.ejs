@@ -110,7 +110,7 @@ config.default_buttons = <%=JSON.stringify((req?req.getJSH().Config.default_butt
 <h3>Button Groups</h3>
 Button Groups combine buttons into a drop-down menu.
 <%-getScreenshot('jsHarmonyTutorials/ModelButtons_Cust_Listing_Grouped?popup=1','Model Buttons',{ onload:function(){     return new Promise(function(resolve){
-  jshInstance.$('.xelemModelButtons_Cust_Listing_Grouped.xactions_dropdown').click()
+  jshInstance.XDom('.xelemModelButtons_Cust_Listing_Grouped.xactions_dropdown').emit('click');
   return resolve();
 }); } })%>
 Button groups can be defined via the "group" attribute, that specifies the name of the drop-down menu:

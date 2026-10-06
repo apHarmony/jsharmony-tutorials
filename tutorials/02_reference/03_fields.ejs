@@ -157,7 +157,7 @@ field := {
   "onchange": "console.log(JSON.stringify(obj));console.log(newval);XExt.Alert('test'); undoChange();",//JavaScript Event Handler for onchange event
     //onchange(obj,newval,undoChange,e)
   "ongetvalue": "return jsh._GET['E_ID'];", //JavaScript Event Handler that fires when "GetValue" is called - before field is sent to the database
-    //ongetvalue(val,field,xmodel,jctrl,parentobj)
+    //ongetvalue(val,field,xmodel,ctrl,parentobj)
   "ondisabled": "console.log(obj.id);", //function(obj){}  JavaScript Event Handler that fires when XPage.Disable is called on the object
   "onenabled": "console.log(obj.id);", //function(obj){}  JavaScript Event Handler that fires when XPage.Enable is called on the object
   "password": "E_SSN", // For type=encascii

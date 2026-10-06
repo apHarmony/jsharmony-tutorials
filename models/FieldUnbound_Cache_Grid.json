@@ -6,7 +6,7 @@
   "fields": [
     {"name":"x_primary","caption":"ID"},
     {"name":"x_textbox", "control":"textbox","caption":"Bound Textbox"},
-    {"caption":"DB Timestamp (Bound)","sqlselect":"strftime('%H:%M:%S','now')"},
+    {"name":"timestamp", "caption":"DB Timestamp (Bound)","sqlselect":"strftime('%H:%M:%S','now')"},
     {"control":"date", "caption":"Unbound Field","unbound":true,"default":"2/3/2019"},
   ]
 }

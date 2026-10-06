@@ -16,9 +16,9 @@ jsh.App[modelid] = new (function(){
       //Update values in Customer grid
       _this.renderCust(function(){
         //Open dialog
-        XExt.CustomPrompt(CUST_GRID_CONTAINER, $(CUST_GRID_CONTAINER),
+        XExt.CustomPrompt(CUST_GRID_CONTAINER, jsh.XDom(CUST_GRID_CONTAINER).element,
         //onInit
-        function(acceptFunc, cancelFunc){
+        function(xDialogObj){
           //Optional - Attach save / cancel events to dialog events
         },
         //onAccept
@@ -44,7 +44,7 @@ jsh.App[modelid] = new (function(){
           jsh.XModels['Customer'].controller.grid.Prop.Enabled = false;
         },
         //options
-        { reuse: true, backgroundClose: true, specialKeys: false }
+        { backgroundClose: true, specialKeys: false }
       );
       });
     });
@@ -57,7 +57,7 @@ jsh.App[modelid] = new (function(){
     if('Customer' in jsh.XModels) return callback(); //Grid already loaded
 
     //Define the grid in-memory
-    XPage.LoadVirtualModel($(CUST_GRID_CONTAINER)[0], {
+    XPage.LoadVirtualModel(jsh.XDom(CUST_GRID_CONTAINER).element, {
       "id": "Customer",
       "layout": "grid",
       'title': 'Customers',
@@ -83,7 +83,7 @@ jsh.App[modelid] = new (function(){
         var apiGrid = new jsh.XAPI.Grid.Static(modelid);
         var apiForm = new jsh.XAPI.Form.Static(modelid);
 
-        _this.template_CustRow = $('.xgrid_CustRow_template').html();
+        _this.template_CustRow = jsh.XDom('.xgrid_CustRow_template').innerHTML;
 
         _this.oninit = function(xmodel){
           //Custom oninit function
@@ -103,25 +103,26 @@ jsh.App[modelid] = new (function(){
           },1);
         }
         
-        _this.onrowbind = function(xmodel,jobj,datarow){
+        _this.onrowbind = function(xmodel,obj,datarow){
           //When focus on child textboxes, trigger SetFocus for container
-          jobj.find('.virtual_cust_name,.virtual_cust_sts').focus(function (e) {
+          jsh.XDom(obj, '.virtual_cust_name,.virtual_cust_sts').on('focus', function (e) {
             xmodel.controller.editablegrid.SetFocus(this, e);
           });
         }
 
-        _this.cust_field_ongetvalue = function(val,field,xmodel,jctrl,parentobj){
-          var rowid = jsh.XExt.XModel.GetRowID(modelid, jctrl);
+        _this.cust_field_ongetvalue = function(val,field,xmodel,ctrl,parentobj){
+          var rowid = jsh.XExt.XModel.GetRowID(modelid, ctrl);
           //Get values from controls
-          var cust_name = jctrl.find('.virtual_cust_name').val();
-          var cust_sts = jctrl.find('.virtual_cust_sts').val();
+          var xdctrl = jsh.XDom(ctrl);
+          var cust_name = xdctrl.get('.virtual_cust_name').value;
+          var cust_sts = xdctrl.get('.virtual_cust_sts').value;
           //Get old values from dataset
           var prev_cust_name = xmodel.get('cust_name', rowid);
           var prev_cust_sts = xmodel.get('cust_sts', rowid);
           //Check if values have changed.
           //If so, update dataset and add the "updated" class to the parent
-          if(cust_name !== prev_cust_name){ xmodel.set('cust_name', cust_name, rowid); jctrl.addClass('updated'); }
-          if(cust_sts !== prev_cust_sts){ xmodel.set('cust_sts', cust_sts, rowid); jctrl.addClass('updated'); }
+          if(cust_name !== prev_cust_name){ xmodel.set('cust_name', cust_name, rowid); xdctrl.class.add('updated'); }
+          if(cust_sts !== prev_cust_sts){ xmodel.set('cust_sts', cust_sts, rowid); xdctrl.class.add('updated'); }
         }
 
         _this.getapi = function(xmodel, apitype){
@@ -143,7 +144,7 @@ jsh.App[modelid] = new (function(){
       },
       "oninit":"_this.oninit(xmodel);",
       "onload":"_this.onload(xmodel);",
-      "onrowbind":"_this.onrowbind(xmodel,jobj,datarow);",
+      "onrowbind":"_this.onrowbind(xmodel,obj,datarow);",
       "oncommit":"_this.oncommit(xmodel, rowid, callback);",
       "getapi":"return _this.getapi(xmodel, apitype);",
       "fields": [
@@ -164,7 +165,7 @@ jsh.App[modelid] = new (function(){
 
         {"name": "cust_field", "caption":"Customer", "control":"label", "unbound": true, "controlstyle": "vertical-align:baseline;",
           "value": "<#-ejs.render(_this.template_CustRow, ejsparams)#>",
-          "ongetvalue": "return _this.cust_field_ongetvalue(val,field,xmodel,jctrl,parentobj);"
+          "ongetvalue": "return _this.cust_field_ongetvalue(val,field,xmodel,ctrl,parentobj);"
         }
       ]
     }, function(custmodel){

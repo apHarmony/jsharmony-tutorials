@@ -34,6 +34,7 @@ module.exports = exports = {};
 
 exports.DEFAULT_SCREENSHOT_SIZE = [950, 700];
 exports.HEADLESS = true;
+exports.SHOW_CONSOLE = false;
 
 exports.generateScreenshots = function(options,callback){
   var _this = this;
@@ -121,6 +122,7 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
     onload: null,
     waitBeforeScreenshot: (exports.HEADLESS ? 150 : 1500),
     unstable: null, // screenshot has inconsistent elements, boolean, commonly a string naming the reason
+    exclude: null, // [{"x": 1, "y": 1, "width": 1, "height": 1} /*Exclude based on rect*/, {"selector": ".selector"} /*Exclude based on DOM selector*/]
   }, params);
   if(!params.browserWidth) params.browserWidth = params.x + params.width;
   if(!params.browserHeight) params.browserHeight = _this.DEFAULT_SCREENSHOT_SIZE[1];
@@ -154,21 +156,22 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
       };
       if(!selector) return resolve(pageSize);
       if(!jshInstance) return resolve(pageSize);
-      var $ = jshInstance.$;
+      var XDom = jshInstance.XDom;
       pageSize = {
-        pageWidth: $(document).width(),
-        pageHeight: $(document).height(),
+        pageWidth: XDom(document).calc.width(),
+        pageHeight: XDom(document).calc.height(),
       }
-      var jobjs = $(selector);
-      if(!jobjs.length) return resolve(pageSize);
+      var xdobjs = XDom(selector);
+      if(!xdobjs.length) return resolve(pageSize);
       var startpos = null;
       var endpos = null;
-      for(var i=0;i<jobjs.length;i++){
-        var jobj = $(jobjs[i]);
-        var offset = jobj.offset();
+      for(var i=0;i<xdobjs.length;i++){
+        var xdobj = XDom(xdobjs.elements[i]);
+        var offsetLeft = xdobj.calc.left();
+        var offsetTop = xdobj.calc.top();
 
-        var offStart = { left: offset.left - 1, top: offset.top - 1 };
-        var offEnd = { left: offset.left + 1 + jobj.outerWidth(), top: offset.top + 1 + jobj.outerHeight() };
+        var offStart = { left: offsetLeft - 1, top: offsetTop - 1 };
+        var offEnd = { left: offsetLeft + 1 + xdobj.calc.widthToBorder(), top: offsetTop + 1 + xdobj.calc.heightToBorder() };
 
         if(!startpos) startpos = offStart;
         if(offStart.left < startpos.left) startpos.left = offStart.left;
@@ -191,46 +194,99 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
     });
   }
 
+  var generateHoverDiv = function(dimensions){
+    var d = "<div class='jsHarmonyScreenshotHoverDiv' style='background-color: black; position: absolute; width: {{width}}px; height: {{height}}px; top:{{top}}px; left: {{left}}px;'></div>";
+    return d.replace('{{width}}',dimensions.width)
+      .replace('{{height}}',dimensions.height)
+      .replace('{{top}}',dimensions.y)
+      .replace('{{left}}',dimensions.x);
+  };
+
+  var addPageContent = function (str) {
+    return new Promise(function(resolve){
+      if (!str) return resolve(null);
+      if (!jshInstance) return resolve(null);
+      jshInstance.XDom('html').append(str);
+      resolve();
+    });
+  };
+
   browser.newPage().then(function (page) {
     var port = jsh.Servers['default'].servers[0].address().port;
     var fullurl = 'http://localhost:'+port+url;
     console.log(_this.basepath + '/public/screenshots/'+fname);
     page.setViewport({ width: params.browserWidth, height: params.browserHeight }).then(function(){
+      if (exports.SHOW_CONSOLE) page.on('console', function(msg) { console.log(msg.text()); });
       page.goto(fullurl, { waitUntil: 'networkidle0' }).then(function(){
         // text caret blinks, creating inconsistent screenshots
         page.addStyleTag({content: '* {caret-color: transparent !important;}'}).then(function() {
-          page.evaluate(params.onload).then(function(){
-            page.evaluate(getPageInfo, params.cropToSelector).then(function(pageInfo){
-              //Apply height clipping using cropRectangle
-              if(!pageInfo.cropRectangle){
-                if(params.height){
-                  pageInfo.cropRectangle = {
-                    x: params.x,
-                    y: params.y,
-                    width: (origParams.width ? origParams.width : pageInfo.pageWidth),
-                    height: params.height
-                  };
+          page.evaluate(params.onload).then(function(){ 
+            return new Promise(function(resolve, reject){
+              //Apply exclude boxes
+              if(params.exclude && params.exclude.length){
+                var execif = function(cond, apply, f){ if(cond) apply(f); else f()};
+                async.eachSeries(params.exclude, function(exl, done){
+                  var excludeRectangle = exl;
+                  execif(exl.selector,
+                    function(selDone){
+                      page.evaluate(getPageInfo, exl.selector).then(function(pageInfo){
+                        excludeRectangle = pageInfo && pageInfo.cropRectangle;
+                        if(!excludeRectangle) return done(new Error('Exclude rectangle not found'));
+                        return selDone();
+                      }).catch(function (err) { return done(err); });
+                    },
+                    function(){
+                      page.evaluate(addPageContent, generateHoverDiv(excludeRectangle)).then(function(){
+                        done();
+                      }).catch(function (err) { jsh.Log.error(err); }); 
+                    }
+                  );
+                }, function(err){
+                  if(err) return reject(err);
+                  return resolve();
+                });
+              }
+              else resolve();
+            }).then(function(){
+              page.evaluate(getPageInfo, params.cropToSelector).then(function(pageInfo){
+                //Apply height clipping using cropRectangle
+                if(!pageInfo.cropRectangle){
+                  if(params.height){
+                    pageInfo.cropRectangle = {
+                      x: params.x,
+                      y: params.y,
+                      width: (origParams.width ? origParams.width : pageInfo.pageWidth),
+                      height: params.height
+                    };
+                  }
                 }
-              }
-              var takeScreenshot = function(){
-                setTimeout(function(){
-                  var screenshotParams = { path: fpath, type: 'png' };
-                  if(pageInfo.cropRectangle) params.postClip = pageInfo.cropRectangle;
-                  screenshotParams.fullPage = true;
-                  page.screenshot(screenshotParams).then(function(){
-                    _this.processScreenshot(fpath, params, function(err){
-                      if(err) jsh.Log.error(err);
-                      page.close().then(function () {
-                        return callback();
-                      }).catch(function (err) { jsh.Log.error(err); });
-                    });
-                  }).catch(function (err) { jsh.Log.error(err); });
-                }, params.waitBeforeScreenshot);
-              }
-              if(params.beforeScreenshot){
-                params.beforeScreenshot(jsh, page, takeScreenshot, pageInfo.cropRectangle);
-              }
-              else takeScreenshot();
+                var takeScreenshot = function(){
+                  setTimeout(function(){
+                    var screenshotParams = { path: fpath, type: 'png' };
+                    if(pageInfo.cropRectangle) params.postClip = pageInfo.cropRectangle;
+                    screenshotParams.fullPage = true;
+                    // the option effectively makes page width unlimited, but grid buttons can be truncated when limiting screenshot width
+                    if (!origParams.width) {
+                      // without this option puppeteer generates a resize event which closes select boxes, and can also be a width-1 resize triggering responsive animations.
+                      // https://stackoverflow.com/questions/68059664/puppeteer-page-screenshot-resizes-viewport
+                      // https://github.com/puppeteer/puppeteer/issues/7251
+                      screenshotParams.captureBeyondViewport = false;
+                    }
+                    page.screenshot(screenshotParams).then(function(){
+                      _this.processScreenshot(fpath, params, function(err){
+                        if(err) jsh.Log.error(err);
+                        page.close().then(function () {
+                          return callback();
+                        }).catch(function (err) { jsh.Log.error(err); });
+                      });
+                    }).catch(function (err) { jsh.Log.error(err); });
+                  }, params.waitBeforeScreenshot);
+                }
+                if(params.beforeScreenshot){
+                  params.beforeScreenshot(jsh, page, takeScreenshot, pageInfo.cropRectangle);
+                }
+                else takeScreenshot();
+              }).catch(function (err) { jsh.Log.error(err); });
             }).catch(function (err) { jsh.Log.error(err); });
           }).catch(function (err) { jsh.Log.error(err); });
         }).catch(function (err) { jsh.Log.error(err); });

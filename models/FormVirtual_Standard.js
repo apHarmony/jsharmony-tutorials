@@ -14,7 +14,7 @@ jsh.App[modelid] = new (function(){
     if('Customer' in jsh.XModels) return; //Form already loaded
 
     //Define the form in-memory
-    XPage.LoadVirtualModel($('.'+xmodel.class+'_form_container')[0], {
+    XPage.LoadVirtualModel(jsh.XDom('.'+xmodel.class+'_form_container').element, {
       "id": "Customer",
       "layout": "form",
       "parent": xmodel.id,

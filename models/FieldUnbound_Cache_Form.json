@@ -7,7 +7,7 @@
   "fields": [
     {"control":"html","value":"<h3>Bound Fields</h3>","block":true},
     {"name":"x_textbox", "caption": "x_textbox"},
-    {"caption":"DB Timestamp (Bound)","sqlselect":"strftime('%H:%M:%S','now')"}, {"control":"label", "controlstyle":"background-color:#ffffcc;padding:3px 7px;border:1px dashed black;", "value": "Bound field will update after save", "nl":false},
+    {"caption":"DB Timestamp (Bound)","sqlselect":"strftime('%H:%M:%S','now')", "name":"timestamp"}, {"control":"label", "controlstyle":"background-color:#ffffcc;padding:3px 7px;border:1px dashed black;", "value": "Bound field will update after save", "nl":false},
     {"control":"html","value":"<h3>Unbound Field</h3>","block":true},
     {"control":"date", "caption":"Unbound Field","unbound":true,"default":"2/3/2019"}, {"control":"label", "controlstyle":"background-color:#ffffcc;padding:3px 7px;border:1px dashed black;", "value": "Unbound field will not change after save", "nl":false}
   ]

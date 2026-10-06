@@ -786,8 +786,8 @@ The example below implements a custom server-side API endpoint, which is called 
 The API call is passed a Message and a Delay in milliseconds.  When the button is clicked, the API waits Delay ms, finds the first customer in the database, and returns: "[Customer Name] says [Message]"
 <%-getScreenshot('jsHarmonyTutorials/FieldValidation_API?popup=1','Field Validation - API')%>
 <%-getScreenshot('jsHarmonyTutorials/FieldValidation_API?popup=1','Field Validation - API Invoked', { onload:function(){ return new Promise(function(resolve){
-  var $ = jshInstance.$;
-  $('.invoke').click();
+  var XDom = jshInstance.XDom;
+  XDom('.invoke').emit('click');
   jshInstance.XExt.waitUntil(function(){ return jshInstance.xDialog.length; }, resolve);
 }); } })%>
 <pre>

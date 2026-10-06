@@ -55,7 +55,7 @@ callback        - Executed on successful creation and initialization of the mode
 </pre>
 
 <h3>Creating Forms</h3>
-<%-getScreenshot('jsHarmonyTutorials/FormVirtual_Standard?cust_id=2&popup=1','Virtual Form', { unstable: 'mystery control wiggle' })%>
+<%-getScreenshot('jsHarmonyTutorials/FormVirtual_Standard?cust_id=2&popup=1','Virtual Form')%>
 The form above can be initialized using the model definition below:
 <pre>
 {
@@ -169,8 +169,8 @@ this.commitCust = function(){
 Virtual forms can also be loaded in popup windows:
 <%-getScreenshot('jsHarmonyTutorials/FormVirtual_Popup?cust_id=2&popup=1','Virtual Form Popup')%>
 <%-getScreenshot('jsHarmonyTutorials/FormVirtual_Popup?cust_id=2&popup=1','Virtual Form Popup - Open', { onload:function(){ return new Promise(function(resolve){
-  jshInstance.$root('.showPopup').click();
-  jshInstance.XExt.waitUntil(function(){ return jshInstance.$root('.save_button').is(':visible'); }, resolve);
+  jshInstance.xd('.showPopup').emit('click');
+  jshInstance.XExt.waitUntil(function(){ return jshInstance.xd('.save_button').isVisible(); }, resolve);
 }); } })%>
 
 First, define the container with the xdialogbox class, inside a hidden div.  Additionally, the width of the popup window can be defined as a style of the xdialogbox tag.

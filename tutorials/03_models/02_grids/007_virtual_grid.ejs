@@ -229,8 +229,8 @@ this.commitCust = function(){
 Virtual grids can also be loaded in popup windows:
 <%-getScreenshot('jsHarmonyTutorials/GridVirtual_Popup?popup=1','Virtual Grid Popup')%>
 <%-getScreenshot('jsHarmonyTutorials/GridVirtual_Popup?popup=1','Virtual Grid Popup - Open', { onload:function(){ return new Promise(function(resolve){
-  jshInstance.$root('.showPopup').click();
-  jshInstance.XExt.waitUntil(function(){ return jshInstance.$root('.xbutton_Save').is(':visible'); }, resolve);
+  jshInstance.xd('.showPopup').emit('click');
+  jshInstance.XExt.waitUntil(function(){ return jshInstance.xd('.xbutton_Save').isVisible(); }, resolve);
 }); } })%>
 
 First, define the container with the xdialogbox class, inside a hidden div.  Additionally, the width of the popup window can be defined as a style of the xdialogbox tag.
@@ -287,8 +287,8 @@ this.showPopup_click = function(){
 The grid can be customized with custom row controls.  In this example, the the two fields (Customer Name and Status) are combined into one:
 <%-getScreenshot('jsHarmonyTutorials/GridVirtual_CustomRow_Popup?popup=1','Virtual Grid Popup w/Custom Rows')%>
 <%-getScreenshot('jsHarmonyTutorials/GridVirtual_CustomRow_Popup?popup=1','Virtual Grid Popup w/Custom Rows - Open', { onload:function(){ return new Promise(function(resolve){
-  jshInstance.$root('.showPopup').click();
-  jshInstance.XExt.waitUntil(function(){ return jshInstance.$root('.xbutton_Save').is(':visible'); }, resolve);
+  jshInstance.xd('.showPopup').emit('click');
+  jshInstance.XExt.waitUntil(function(){ return jshInstance.xd('.xbutton_Save').isVisible(); }, resolve);
 }); } })%>
 
 First, the fields are defined in the Virtual Model:
@@ -312,7 +312,7 @@ First, the fields are defined in the Virtual Model:
 
     {"name": "cust_field", "caption":"Customer", "control":"label", "unbound": true, "controlstyle": "vertical-align:baseline;",
       "value": "<#-ejs.render(_this.template_CustRow, ejsparams)#>",
-      "ongetvalue": "return _this.cust_field_ongetvalue(val,field,xmodel,jctrl,parentobj);"
+      "ongetvalue": "return _this.cust_field_ongetvalue(val,field,xmodel,ctrl,parentobj);"
     }
   ]
 }
@@ -332,9 +332,9 @@ Note that the first input element in the control template has the "xform_ctrl_su
 <br/>
 Finally, the model.onrowbind property is overridden to trigger "SetFocus" on the container control when either of the subcontrols receive focus:
 <pre>
-_this.onrowbind = function(xmodel,jobj,datarow){
+_this.onrowbind = function(xmodel,obj,datarow){
   //When focus on child textboxes, trigger SetFocus for container
-  jobj.find('.virtual_cust_name,.virtual_cust_sts').focus(function (e) {
+  jsh.XDom(obj, '.virtual_cust_name,.virtual_cust_sts').on('focus', function (e) {
     xmodel.controller.editablegrid.SetFocus(this, e);
   });
 }

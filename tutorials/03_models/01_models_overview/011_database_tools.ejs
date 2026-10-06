@@ -37,14 +37,15 @@ The jsHarmony Factory comes with basic tools for working with the database.  The
 
 <h3>DB SQL</h3>
 The DB SQL tool can be used to execute SQL:
-<%-getScreenshot('jsHarmonyFactory/Dev/DBSQL','Database Tools - DB SQL', { unstable: 'runtime', onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyFactory/Dev/DBSQL','Database Tools - DB SQL', { onload:function(){ return new Promise(function(resolve){
   var jsh = jshInstance;
-  jsh.$root('.sql').val('select * from cust;');
-  jsh.$root('.runsql').click();
-  jsh.XExt.waitUntil(function(){ return !!jsh.$root('.rslt_container').text().trim(); }, function(){
+  jsh.xd('.sql').value = 'select * from cust;';
+  jsh.xd('.runsql').emit('click');
+  jsh.XExt.waitUntil(function(){ return !!jsh.xd('.rslt_container').get('.rslt').getChildren('div').length; }, function(){
+    jsh.xd('.rslt_container').get('.rslt').getChildren('div').last().class.add('runtime');
     resolve();
   });
-}); } })%>
+}); }, exclude:[{'selector': '.runtime'}] })%>
 A variety of sample scripts, such as "Create Table" and "List Tables" are available via the drop-down.
 
 <h3>DB Scripts</h3>
@@ -72,7 +73,7 @@ The scripts are grouped by the jsHarmony module.  Local scripts are grouped unde
 The DB Schema tool can be used to explore the database table, view, and function definition, and to view table data:
 <%-getScreenshot('jsHarmonyFactory/Dev/DBSchema','Database Tools - DB Schema', { onload:function(){ return new Promise(function(resolve){
   var jsh = jshInstance;
-  jsh.$root('.table_name.expandable').first().click();
+  jsh.xd('.table_name.expandable').first().emit('click');
   resolve();
 }); } })%>
 

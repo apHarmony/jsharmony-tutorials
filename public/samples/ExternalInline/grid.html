@@ -9,7 +9,6 @@ var SampleApp = function(){
   var XExt = null;
   var XPage = null;
   var XForm = null;
-  var $ = null;
   var _ = null;
 
   var CUST_GRID_CONTAINER_CLASS= 'sample_cust_grid_container';
@@ -23,7 +22,6 @@ var SampleApp = function(){
     XExt = jsh.XExt;
     XPage = jsh.XPage;
     XForm = jsh.XForm;
-    $ = jsh.$;
     _ = jsh._;
 
     this.initGrid();
@@ -37,7 +35,7 @@ var SampleApp = function(){
     window.onbeforeunload = XExt.chain(window.onbeforeunload, function(){ return XPage.GetChangesMessage('Customer'); });
 
     //Define the grid in-memory
-    XPage.LoadVirtualModel($('.'+CUST_GRID_CONTAINER_CLASS)[0], {
+    XPage.LoadVirtualModel(jsh.XDom('.'+CUST_GRID_CONTAINER_CLASS).element, {
       "id": "Customer",
       "layout": "grid",
       'title': 'Customers',

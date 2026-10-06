@@ -59,8 +59,12 @@ Grid validation can run at either the "row" or "cell" level.  By default, valida
 </pre>
 
 <%-getScreenshot('jsHarmonyTutorials/GridEditable_Cust_Listing?popup=1','Grid Validation', { onload:function(){ return new Promise(function(resolve){
-  jshInstance.$root('.cust_name').first().focus().val('').change().blur();
-  jshInstance.$root('.save').click();
+  var xdcust_name = jshInstance.xd('.cust_name').first();
+  xdcust_name.focus();
+  xdcust_name.value = '';
+  xdcust_name.emit('change');
+  xdcust_name.blur();
+  jshInstance.xd('.save').emit('click');
   window.setTimeout(resolve, 100);
 }); } })%>
 
@@ -107,9 +111,9 @@ When the user adds a new row, by default, the row is added to the top of the gri
 </pre>
 
 <%-getScreenshot('jsHarmonyTutorials/GridEditable_Cust_Listing?popup=1','Grid Insert', { onload:function(){ return new Promise(function(resolve){
-  jshInstance.$root('.xbuttoninsert').focus();
+  jshInstance.xd('.xbuttoninsert').focus();
   setTimeout(function(){
-    jshInstance.$root('.xbuttoninsert').click();
+    jshInstance.xd('.xbuttoninsert').emit('click');
     resolve();
   }, 200);
 }); } })%>

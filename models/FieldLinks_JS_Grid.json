@@ -10,6 +10,6 @@
 
     {"control": "button", "value":"JavaScript Alert", "link": "js:XExt.Alert('Sample Alert');"},
     {"control": "button", "value":"JavaScript popupForm", "link": "js:XExt.popupForm(xmodel.namespace+'FieldLinks_Cust','insert',{ 'cust_name': xmodel.get('cust_name',this)+'_SUB' });"},
-    {"control": "button", "value":"JavaScript Email", "link": "js:var email = xmodel.get('cust_email',this); if(email){ var url = 'mailto:'+email; jsh.getFileProxy().prop('src', url); }"}
+    {"control": "button", "value":"JavaScript Email", "link": "js:var email = xmodel.get('cust_email',this); if(email){ var url = 'mailto:'+email; jsh.getFileProxy().src = url; }"}
   ]
 }

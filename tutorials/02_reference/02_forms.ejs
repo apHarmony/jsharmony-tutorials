@@ -153,8 +153,8 @@ model := {
   "oncommit": "_this.oncommit(xmodel, rowid, callback)", //(GRID ONLY) - Executes after db Update / Insert / Delete.
   "onloadstate": "_this.onloadstate(xmodel, state)",
   "ongetstate": "_this.ongetstate(xmodel)",
-  "onrowbind": "_this.onrowbind(xmodel,jobj,datarow)",   //(GRID ONLY)
-  "onrowunbind": "_this.onrowunbind(xmodel,jobj,rowid)", //(GRID ONLY)
+  "onrowbind": "_this.onrowbind(xmodel,obj,datarow)",   //(GRID ONLY)
+  "onrowunbind": "_this.onrowunbind(xmodel,obj,rowid)", //(GRID ONLY)
   "getapi": "_this.getapi(apitype)",
   "onroute": "_this.onroute(routetype, req, res, f, require, jsh, modelid, params)", //Server-side reroute to different page if necessary, called before any jsHarmony data loaded
     //routetypes: singlepage, model, d, d_transaction, csv, report, d_report, d_report_html, d_reportjob

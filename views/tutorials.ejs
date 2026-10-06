@@ -37,7 +37,7 @@ hljs.initHighlightingOnLoad();
     <a class="xsublogo" href="<%-ejsext.iif(req.isAuthenticated,'',req.jshsite.home_url)%>/" alt="Tutorials Collection" title="Tutorials Collection"><%=req.jshsite.title%></a>
   </div>
   <div class="tutorials_search">
-    <form action="/_search" method="get" onSubmit="<%=req.jshsite.instance%>.App.tutorials.searchTutorials(<%=req.jshsite.instance%>.$root('.tutorials_search .query').val()); return false;">
+    <form action="/_search" method="get" onSubmit="<%=req.jshsite.instance%>.App.tutorials.searchTutorials(<%=req.jshsite.instance%>.xd('.tutorials_search .query').value); return false;">
       <input name="query" class="query" type="text" value="Search" /><input class="submit" type="submit" />
     </form>
   </div>

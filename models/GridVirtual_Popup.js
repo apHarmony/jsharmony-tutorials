@@ -16,9 +16,9 @@ jsh.App[modelid] = new (function(){
       //Update values in Customer grid
       _this.renderCust(function(){
         //Open dialog
-        XExt.CustomPrompt(CUST_GRID_CONTAINER, $(CUST_GRID_CONTAINER),
+        XExt.CustomPrompt(CUST_GRID_CONTAINER, jsh.XDom(CUST_GRID_CONTAINER).element,
         //onInit
-        function(acceptFunc, cancelFunc){
+        function(xDialogObj){
           //Optional - Attach save / cancel events to dialog events
         },
         //onAccept
@@ -44,7 +44,7 @@ jsh.App[modelid] = new (function(){
           jsh.XModels['Customer'].controller.grid.Prop.Enabled = false;
         },
         //options
-        { reuse: true, backgroundClose: true, specialKeys: false }
+        { backgroundClose: true, specialKeys: false }
       );
       });
     });
@@ -57,7 +57,7 @@ jsh.App[modelid] = new (function(){
     if('Customer' in jsh.XModels) return callback(); //Grid already loaded
 
     //Define the grid in-memory
-    XPage.LoadVirtualModel($(CUST_GRID_CONTAINER)[0], {
+    XPage.LoadVirtualModel(jsh.XDom(CUST_GRID_CONTAINER).element, {
       "id": "Customer",
       "layout": "grid",
       'title': 'Customers',

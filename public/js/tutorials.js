@@ -28,7 +28,7 @@ var jsHarmonyTutorials = function(jsh){
 jsHarmonyTutorials.prototype.Init = function(config){
   var _this = this;
   var jsh = _this.jsh;
-  var $ = jsh.$;
+  var XDom = jsh.XDom;
   var _ = jsh._;
   var moment = jsh.moment;
   var XForm = jsh.XForm;
@@ -71,25 +71,30 @@ jsHarmonyTutorials.prototype.Init = function(config){
   }
 
   function onLayout(){
-    var wh = $(window).height();
-    var ww = $(window).width();
-    var menupadding = XExt.getPadding(jsh.$root('.tutorials_menu'));
-    var menuborder = XExt.getBorder(jsh.$root('.tutorials_menu'));
-    var menuh = wh - jsh.$root(".xhead").height() - menupadding.top - menupadding.bottom - menuborder.top - menuborder.bottom;
-    jsh.$root('.tutorials_menu').css('height',menuh+'px');
+    var wh = window.innerHeight;
+    var ww = window.innerWidth;
 
-    var bodypadding = XExt.getPadding(jsh.$root('.tutorials_body'));
-    var bodyborder = XExt.getBorder(jsh.$root('.tutorials_body'));
-    var bodyh = wh - jsh.$root(".xhead").height() - bodypadding.top - bodypadding.bottom - bodyborder.top - bodyborder.bottom;
-    jsh.$root('.tutorials_body').css('height',bodyh+'px');
-    var bodyw = ww - bodypadding.left - bodypadding.right - bodyborder.left - bodyborder.right - jsh.$root('.tutorials_menu').outerWidth();
-    jsh.$root('.tutorials_body').css('width',bodyw+'px');
+    var xdtutorials_menu = jsh.xd('.tutorials_menu');
+    var xdtutorials_body = jsh.xd('.tutorials_body');
+    var xdtutorial_tabs_body = jsh.xd('.tutorial_tabs_body');
 
-    var tutorialpadding = XExt.getPadding(jsh.$root('.tutorial_tabs_body'));
-    var tutorialborder = XExt.getBorder(jsh.$root('.tutorial_tabs_body'));
-    var tutorialh = bodyh - jsh.$root('.tutorial_title').outerHeight() - jsh.$root('.tutorial_tabs').outerHeight();
+    var menupadding = XExt.getPadding(xdtutorials_menu.element);
+    var menuborder = XExt.getBorder(xdtutorials_menu.element);
+    var menuh = wh - jsh.xd(".xhead").calc.height() - menupadding.top - menupadding.bottom - menuborder.top - menuborder.bottom;
+    xdtutorials_menu.style.height = menuh+'px';
+
+    var bodypadding = XExt.getPadding(xdtutorials_body.element);
+    var bodyborder = XExt.getBorder(xdtutorials_body.element);
+    var bodyh = wh - jsh.xd(".xhead").calc.height() - bodypadding.top - bodypadding.bottom - bodyborder.top - bodyborder.bottom;
+    xdtutorials_body.style.height = bodyh+'px';
+    var bodyw = ww - bodypadding.left - bodypadding.right - bodyborder.left - bodyborder.right - xdtutorials_menu.calc.widthToBorder();
+    xdtutorials_body.style.width = bodyw+'px';
+
+    var tutorialpadding = XExt.getPadding(xdtutorial_tabs_body.element);
+    var tutorialborder = XExt.getBorder(xdtutorial_tabs_body.element);
+    var tutorialh = bodyh - jsh.xd('.tutorial_title').calc.heightToBorder() - jsh.xd('.tutorial_tabs').calc.heightToBorder();
     tutorialh = tutorialh - tutorialpadding.top - tutorialpadding.bottom - tutorialborder.top - tutorialborder.bottom;
-    jsh.$root('.tutorial_tabs_body').css('height',tutorialh+'px');
+    xdtutorial_tabs_body.style.height = tutorialh+'px';
   }
 
   _this.onTutorialSelected = function(nodeid, ctrl){
@@ -104,8 +109,9 @@ jsHarmonyTutorials.prototype.Init = function(config){
       }
       if(node[jsh.uimap['code_icon']]=='folder') return;
     }
-    var nodectrl = jsh.$root('.tutorials_menu').find('.tree_item.tree_item_' + nodeid);
-    if(nodectrl.length) XExt.scrollObjIntoView(jsh.$root('.tutorials_menu'), nodectrl);
+    var xdtutorials_menu = jsh.xd('.tutorials_menu');
+    var xdnodectrl = xdtutorials_menu.get('.tree_item.tree_item_' + nodeid);
+    if(xdnodectrl.length) XExt.scrollObjIntoView(xdtutorials_menu.element, xdnodectrl.element);
     if(curTutorial && (curTutorial.id==orignode[jsh.uimap['code_val']])) return;
     _this.loadTutorial(node[jsh.uimap['code_val']]);
   }
@@ -130,22 +136,22 @@ jsHarmonyTutorials.prototype.Init = function(config){
       else {
         XExt.ReplaceHistory(url, config);
       }
-      jsh.$root('.tutorial_tabs_body').scrollTop(0);
+      jsh.xd('.tutorial_tabs_body').element.scrollTop = 0;
       curTutorial = config;
       curTutorial.Source = rslt.source;
       //Render Title
-      jsh.$root('.tutorial_title').html(displayTitle);
-      jsh.$root('.tutorial_tabs').show();
+      jsh.xd('.tutorial_title').text = displayTitle;
+      jsh.xd('.tutorial_tabs').style.display = true;
       //Render Tabs (Source, Demo)
 
-      jsh.$root('.tutorial_tabs .left').show();
-      jsh.$root('.tutorial_tabs .overview').show();
+      jsh.xd('.tutorial_tabs .left').style.display = true;
+      jsh.xd('.tutorial_tabs .overview').style.display = true;
 
-      if(config.Code && config.Code.length) jsh.$root('.tutorial_tabs a.code').show();
-      else jsh.$root('.tutorial_tabs a.code').hide();
+      if(config.Code && config.Code.length) jsh.xd('.tutorial_tabs a.code').style.display = true;
+      else jsh.xd('.tutorial_tabs a.code').style.display = false;
 
-      if(config.Demo && config.Demo.length) jsh.$root('.tutorial_tabs a.demo').show();
-      else jsh.$root('.tutorial_tabs a.demo').hide();
+      if(config.Demo && config.Demo.length) jsh.xd('.tutorial_tabs a.demo').style.display = true;
+      else jsh.xd('.tutorial_tabs a.demo').style.display = false;
 
       //Add PRE tags to tutorials
       var body = rslt.data;
@@ -156,43 +162,45 @@ jsHarmonyTutorials.prototype.Init = function(config){
       });
 
       //Load Tutorial in Body
-      jsh.$root('.tutorial_overview').html(body);
+      var xdtutorial_overview = jsh.xd('.tutorial_overview');
+      xdtutorial_overview.html = body;
 
       //Create outline
       var outline_html = '';
       var outline_count = 0;
-      jsh.$root('.tutorial_overview').find('h1,h2,h3').each(function(){
-        var jobj = $(this);
-        if(jobj.closest('.tutorials_intro').length) return;
-        var header_id = getAnchorID(jobj.text());
-        jobj.before('<a class="tutorial_outline_anchor" name="'+header_id+'"></a>');
-        var level = jobj.data('level');
-        outline_html += '<li class="level'+level+'"><a href="#'+header_id+'">'+XExt.escapeHTML(jobj.text())+'</a></li>';
+      xdtutorial_overview.get('h1,h2,h3').for(function(xdobj){
+        if(xdobj.parent('.tutorials_intro').length) return;
+        var header_id = getAnchorID(xdobj.innerHTML);
+        xdobj.parent().insertBefore(XDom.render('<a class="tutorial_outline_anchor" name="'+header_id+'"></a>'), xdobj.element);
+        var level = xdobj.data.level;
+        outline_html += '<li class="level'+level+'"><a href="#'+header_id+'">'+XExt.escapeHTML(xdobj.innerHTML)+'</a></li>';
         outline_count++;
       });
-      if(outline_html && (outline_count > 1)) jsh.$root('.tutorial_overview').prepend('<ul class="tutorial_outline">'+outline_html+'</ul>');
-      jsh.$root('.tutorial_overview').prepend(jsh.$root('.tutorial_overview .tutorials_intro'));
+      if(outline_html && (outline_count > 1)) xdtutorial_overview.prepend('<ul class="tutorial_outline">'+outline_html+'</ul>');
+      var xdIntro = jsh.xd('.tutorial_overview .tutorials_intro');
+      if(xdIntro.length) xdtutorial_overview.prepend(xdIntro);
 
       //Select tab
-      jsh.$root('.tutorial_tabs a').removeClass('selected');
-      if(jsh.$root('.tutorial_tabs a.overview').is(':visible')) _this.viewTutorialOverview();
-      else if(jsh.$root('.tutorial_tabs a.code').is(':visible')) _this.viewTutorialCodeListing();
+      jsh.xd('.tutorial_tabs a').class.remove('selected');
+      if(jsh.xd('.tutorial_tabs a.overview').isVisible()) _this.viewTutorialOverview();
+      else if(jsh.xd('.tutorial_tabs a.code').isVisible()) _this.viewTutorialCodeListing();
       
       //Change selected menu item + scroll into view if not visible
       for(var i=0;i<tutorialsLOV.length;i++){
         var node = tutorialsLOV[i];
         if(node[jsh.uimap['code_val']] == tutorial){
-          XExt.TreeSelectNode(jsh.$root('.tutorials_menu'),node[jsh.uimap['code_val']])
+          XExt.TreeSelectNode(jsh.xd('.tutorials_menu').element,node[jsh.uimap['code_val']])
           break;
         }
       }
 
       onLayout();
-      if(typeof config.scrollTop !== 'undefined') jsh.$root('.tutorial_tabs_body').scrollTop(config.scrollTop);
+      var xdtutorial_tabs_body = jsh.xd('.tutorial_tabs_body');
+      if(typeof config.scrollTop !== 'undefined') xdtutorial_tabs_body.element.scrollTop = config.scrollTop;
       else if(anchor){
-        var anchorpos = $('a[name='+anchor.substr(1)+']');
-        if(anchorpos.length){
-          jsh.$root('.tutorial_tabs_body').scrollTop(anchorpos.offset().top-jsh.$root('.tutorial_tabs_body').offset().top);
+        var xdanchorpos = XDom('a[name="'+anchor.substr(1)+'"]');
+        if(xdanchorpos.length){
+          xdtutorial_tabs_body.element.scrollTop = xdanchorpos.calc.top()-xdtutorial_tabs_body.calc.top();
         }
       }
 
@@ -201,20 +209,19 @@ jsHarmonyTutorials.prototype.Init = function(config){
   }
 
   _this.viewTutorialOverview = function(){
-    jsh.$root('.tutorial_tabs a').removeClass('selected');
-    jsh.$root('.tutorial_tabs a.overview').addClass('selected');
-    jsh.$root('.tutorial_tabs_body').children().hide();
-    jsh.$root('.tutorial_overview').show();
-    jsh.$root('.tutorial_overview pre').each(function(){
-      var jobj = $(this);
-      var html = jobj.html();
+    jsh.xd('.tutorial_tabs a').class.remove('selected');
+    jsh.xd('.tutorial_tabs a.overview').class.add('selected');
+    jsh.xd('.tutorial_tabs_body').children.style.display = false;
+    jsh.xd('.tutorial_overview').style.display = true;
+    jsh.xd('.tutorial_overview pre').for(function(xdobj){
+      var html = xdobj.innerHTML;
 
       //Replace bracketes
       //html = XExt.ReplaceAll(html, "<", "&lt;");
       //html = XExt.ReplaceAll(html, ">", "&gt;");
 
       //Bring back styles
-      if(jobj.not('.no_styles,.raw').length){
+      if(xdobj.omit('.no_styles,.raw').length){
         html = XExt.ReplaceAll(html, "[i]", "<i>");
         html = XExt.ReplaceAll(html, "[/i]", "</i>");
         html = XExt.ReplaceAll(html, "[b]", "<b>");
@@ -228,17 +235,17 @@ jsHarmonyTutorials.prototype.Init = function(config){
           return rslt;
         });
       }
-      jobj.html(html);
+      xdobj.html = html;
     });
-    jsh.$root('.tutorial_overview pre').not('.shell,.raw').each(function(i, block) {
+    jsh.xd('.tutorial_overview pre').omit('.shell,.raw').elements.forEach(function(block) {
       hljs.highlightBlock(block);
     });
-    jsh.$root('.tutorial_overview span.curdt').text(moment.utc().format());
-    jsh.$root('.tutorial_overview a').each(function(){
-      var url = $(this).prop('href');
+    jsh.xd('.tutorial_overview span.curdt').text = moment.utc().format();
+    jsh.xd('.tutorial_overview a').elements.forEach(function(obj){
+      var url = obj.href;
       if(url.substr(0,3)=='id:'){
         var turl = tutorialIDs[url.substr(3)];
-        if(turl) $(this).on('click', function(e){ _this.loadTutorial(turl); e.preventDefault(); });
+        if(turl) XDom(obj).on('click', function(e){ _this.loadTutorial(turl); e.preventDefault(); });
       }
     });
 
@@ -246,22 +253,22 @@ jsHarmonyTutorials.prototype.Init = function(config){
   }
 
   _this.viewTutorialCodeListing = function(){
-    jsh.$root('.tutorial_tabs a').removeClass('selected');
-    jsh.$root('.tutorial_tabs a.code').addClass('selected');
-    jsh.$root('.tutorial_tabs_body').children().hide();
-    jsh.$root('.tutorial_code_listing').show();
+    jsh.xd('.tutorial_tabs a').class.remove('selected');
+    jsh.xd('.tutorial_tabs a.code').class.add('selected');
+    jsh.xd('.tutorial_tabs_body').children.style.display = false;
+    jsh.xd('.tutorial_code_listing').style.display = true;
     //Use template to render
-    var ejssource = jsh.$root('.tutorial_code_listing_template').html();
+    var ejssource = jsh.xd('.tutorial_code_listing_template').innerHTML;
     ejssource = ejssource.replace(/<#/g,'<%').replace(/#>/g,'%>')
-    jsh.$root('.tutorial_code_listing').html(ejs.render(ejssource,{data:curTutorial,xejs:XExt.xejs,jsh:jsh}));
+    jsh.xd('.tutorial_code_listing').html = ejs.render(ejssource,{data:curTutorial,xejs:XExt.xejs,jsh:jsh});
     onLayout();
   }
 
   _this.viewTutorialCode = function(idx){
-    jsh.$root('.tutorial_tabs a').removeClass('selected');
-    jsh.$root('.tutorial_tabs a.code').addClass('selected');
-    jsh.$root('.tutorial_tabs_body').children().hide();
-    jsh.$root('.tutorial_code').show();
+    jsh.xd('.tutorial_tabs a').class.remove('selected');
+    jsh.xd('.tutorial_tabs a.code').class.add('selected');
+    jsh.xd('.tutorial_tabs_body').children.style.display = false;
+    jsh.xd('.tutorial_code').style.display = true;
     //Use template to render
     var filename = '';
     var source = '';
@@ -269,10 +276,10 @@ jsHarmonyTutorials.prototype.Init = function(config){
       filename = curTutorial.Code[idx];
       source = curTutorial.Source[filename]||'';
     }
-    var ejssource = jsh.$root('.tutorial_code_template').html();
+    var ejssource = jsh.xd('.tutorial_code_template').innerHTML;
     ejssource = ejssource.replace(/<#/g,'<%').replace(/#>/g,'%>')
-    jsh.$root('.tutorial_code').html(ejs.render(ejssource,{data:{filename:filename,source:source},xejs:XExt.xejs,jsh:jsh}));
-    jsh.$root('.tutorial_code_source').each(function(i, block) {
+    jsh.xd('.tutorial_code').html = ejs.render(ejssource,{data:{filename:filename,source:source},xejs:XExt.xejs,jsh:jsh});
+    jsh.xd('.tutorial_code_source').elements.forEach(function(block) {
       hljs.highlightBlock(block);
     });
     onLayout();
@@ -287,47 +294,49 @@ jsHarmonyTutorials.prototype.Init = function(config){
     if(!curTutorial.Demo.length) return;
     if(curTutorial.Demo.length==1){ _this.viewTutorialDemo(0); return; }
 
-    jsh.$root('.tutorial_tabs a').removeClass('selected');
-    jsh.$root('.tutorial_tabs a.demo').addClass('selected');
-    jsh.$root('.tutorial_tabs_body').children().hide();
-    jsh.$root('.tutorial_demo_listing').show();
+    jsh.xd('.tutorial_tabs a').class.remove('selected');
+    jsh.xd('.tutorial_tabs a.demo').class.add('selected');
+    jsh.xd('.tutorial_tabs_body').children.style.display = false;
+    jsh.xd('.tutorial_demo_listing').style.display = true;
     //Use template to render
-    var ejssource = jsh.$root('.tutorial_demo_listing_template').html();
+    var ejssource = jsh.xd('.tutorial_demo_listing_template').innerHTML;
     ejssource = ejssource.replace(/<#/g,'<%').replace(/#>/g,'%>')
-    jsh.$root('.tutorial_demo_listing').html(ejs.render(ejssource,{data:curTutorial,xejs:XExt.xejs,jsh:jsh}));
+    jsh.xd('.tutorial_demo_listing').html = ejs.render(ejssource,{data:curTutorial,xejs:XExt.xejs,jsh:jsh});
     onLayout();
   }
 
   _this.searchTutorials = function(query,options){
     if(!options) options = {};
-    jsh.$root('.tutorial_title').text('Search Results - ' + query);
-    jsh.$root('.tutorial_tabs_body').children().hide();
-    jsh.$root('.tutorial_search_results').empty().show();
-    jsh.$root('.tutorial_tabs').children().hide();
+    jsh.xd('.tutorial_title').html = 'Search Results - ' + query;
+    jsh.xd('.tutorial_tabs_body').children.style.display = false;
+    var xdsearch_results = jsh.xd('.tutorial_search_results');
+    xdsearch_results.clear();
+    xdsearch_results.style.display = true;
+    jsh.xd('.tutorial_tabs').children.style.display = false;
     XForm.prototype.XExecute('../_search',{ query: query }, function (rslt) {
       document.title = 'Tutorial - Search Results - ' + query;
 
-      var url = '/search/?'+$.param({query:query});
+      var url = '/search/?'+jsh.XExt.escapeQuery({query:query});
       if(!options.noHistory) XExt.AddHistory(url,{});
-      var ejssource = jsh.$root('.tutorial_search_results_template').html();
+      var ejssource = jsh.xd('.tutorial_search_results_template').innerHTML;
       ejssource = ejssource.replace(/<#/g,'<%').replace(/#>/g,'%>')
-      jsh.$root('.tutorial_search_results').html(ejs.render(ejssource,{data:rslt,xejs:XExt.xejs,tutorials:tutorials,jsh:jsh}));
+      jsh.xd('.tutorial_search_results').html = ejs.render(ejssource,{data:rslt,xejs:XExt.xejs,tutorials:tutorials,jsh:jsh});
     });
     onLayout();
   }
 
   _this.saveScroll = function(){
-    var scrollTop = jsh.$root('.tutorial_tabs_body').scrollTop();
+    var scrollTop = jsh.xd('.tutorial_tabs_body').element.scrollTop;
     var curstate = history.state;
     if(!curstate) return;
     XExt.ReplaceHistory(window.location.href, _.extend(curstate,{ scrollTop: scrollTop }));
   }
 
-  $(document).ready(function(){
+  XDom.onPageLoad(function(){
     tutorialsLOV = [];
     genTutorialsLOV(tutorialsLOV,tutorialsMenu);
-    XExt.TreeRender(jsh.$root('.tutorials_menu'), tutorialsLOV, 0);
-    XExt.TreeExpandAll(jsh.$root('.tutorials_menu'));
+    XExt.TreeRender(jsh.xd('.tutorials_menu').element, tutorialsLOV, 0);
+    XExt.TreeExpandAll(jsh.xd('.tutorials_menu').element);
     onLayout();
 
     var path = window.location.pathname;
@@ -343,17 +352,19 @@ jsHarmonyTutorials.prototype.Init = function(config){
       _this.searchTutorials(jsh._GET.query||'',{ noHistory: true });
     }
 
-    jsh.$root('.tutorials_search .query').focus(function() { 
+    var xdsearchquery = jsh.xd('.tutorials_search .query'); 
+    xdsearchquery.on('focus', function() { 
       var _this = this; 
-      $(_this).select(); 
-      if($(_this).val()=='Search') $(_this).val('');
+      var xd_this = XDom(_this);
+      xd_this.emit('select'); 
+      if(xd_this.value=='Search') xd_this.value = '';
     });
-    jsh.$root('.tutorials_search .query').mouseup(function(e) { e.preventDefault(); return false; });
-    jsh.$root('.tutorial_tabs_body').scroll(function(){ _this.saveScroll(); });
-    $(window).resize(function(){ _this.saveScroll(); });
+    xdsearchquery.on('mouseup', function(e) { e.preventDefault(); return false; });
+    jsh.xd('.tutorial_tabs_body').on('scroll', function(){ _this.saveScroll(); });
+    XDom(window).on('resize', function(){ _this.saveScroll(); });
   });
 
-  $(window).resize(onLayout);
+  XDom(window).on('resize', onLayout);
 
   window.onpopstate = function(event){
     var state = event.state;

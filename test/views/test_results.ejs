@@ -11,7 +11,11 @@
 <% for(var k in failImages){ %>
   <div class="comp">
     <h2>Screenshot name: <%= failImages[k].name; %></h2>
-    <img src="<%=screenshots_source_dir%>/<%=failImages[k].name; %>"><br>
+    <% if (fs.existsSync(path.join(screenshots_source_dir, 'exclude_box_screenshots/'+failImages[k].name))) { %>
+      <img src="<%=screenshots_source_dir%>/exclude_box_screenshots/<%=failImages[k].name; %>"><br>
+    <% } else { %>
+      <img src="<%=screenshots_source_dir%>/<%=failImages[k].name; %>"><br>
+    <% } %>
     <b>Error: <span style="color: red;"><%= failImages[k].reason; %></span> </b>
     <% if (failImages[k].reason != 'New image was not generated'){ %>
       <h3>Regenerated image:</h3>
