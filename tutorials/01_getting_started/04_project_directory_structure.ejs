@@ -26,11 +26,10 @@ along with this package.  If not, see <http://www.gnu.org/licenses/>.
 }
 </script>
 
-<h3>/app.js, /package.json, /nstart &nbsp; (Node.js Startup Files)</h3>
+<h3>/app.js, /package.json</h3>
 <ul>
   <li><b>/app.js</b> - The root Node.js file.  The system can be run from the shell via "node app.js"</li>
   <li><b>/package.js</b> - The Node.js project meta information</li>
-  <li><b>/nstart.sh (Linux), or /nstart.cmd (Windows)</b> - The batch file used to launch app.js.  It runs a process monitor called supervisor to auto-restart when any models or JavaScript files are modified.  Supervisor does not detect newly created files, so the server will need to be manually restarted when new files are added.</li>
 </ul>
 
 <h3>/app.config.js</h3>

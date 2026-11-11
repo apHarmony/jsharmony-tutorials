@@ -75,10 +75,6 @@ It should be saved as "jsharmony.project.json" in the application root.
         "cert": "cert/localhost.crt" //Location where cert will be saved
       }
     ],
-    
-    //Generate the "nstart" script that restarts the server when program files are changed - default "true"
-    "generate_nstart": true,
-    "generate_nstart": ["./models","./views","./app.config.js","./app.config.local.js","./app.js"],
 
     //Generate a .gitignore file to leave config and data out of the git repository - default "true"
     "generate_gitignore": true,
@@ -87,6 +83,13 @@ It should be saved as "jsharmony.project.json" in the application root.
     //Do not ask the user whether or not to create a database - default "true"
     "auto_create_database": true
   },
+
+  //Development Configuration
+  "dev": {
+    //Watch paths to restart the server when the application is updated - default "true"
+    "watch": true,
+    "watch": ["./models","./views","./app.config.js","./app.config.local.js","./app.js"],
+  }
   
   //Package.json extensions - will be merged with default package.json
   "package": {

@@ -43,11 +43,11 @@ The following are the key projects in the jsHarmony system:
 <h3>jsHarmony</h3>
 The jsHarmony application consists of client-side and server-side components.<br/>
 <br/>
-The server started using "nstart.cmd" (Windows) or "nstart.sh" (Linux).  The "supervisor" command in that batch file automatically restarts if any files have been changed.<br/>
+The server can be started in development mode from the CLI using using "jsharmony dev", to automatically restart if any files have been changed.<br/>
 <br/>
 When updating the jsHarmony Core, it is recommended to add the relevant to modules to the auto-restart process, ex:
 <pre>
-supervisor -i clientjs,test,public,data,./models/sql,./node_modules/jsharmony-db-mssql/node_modules,./node_modules/jsharmony-db-sqlite/node_modules,./node_modules/jsharmony-db/node_modules,./node_modules/jsharmony-cms/node_modules,./node_modules/jsharmony-factory/node_modules,./node_modules/jsharmony/node_modules -w "./node_modules/jsharmony,./models,./views,./node_modules/jsharmony-factory,./node_modules/jsharmony-db,./node_modules/jsharmony-db-mssql,./node_modules/jsharmony-db-sqlite,./app.config.js,./app.config.local.js" -e "node,js,json,css,ejs,sql" node "./app.js"
+jsharmony dev --watch "./node_modules/jsharmony,./models,./views,./node_modules/jsharmony-factory,./node_modules/jsharmony-db,./node_modules/jsharmony-db-mssql,./node_modules/jsharmony-db-sqlite,./app.config.js,./app.config.local.js" --exclude "clientjs,test,public,data,./models/sql,./node_modules/jsharmony-db-mssql/node_modules,./node_modules/jsharmony-db-sqlite/node_modules,./node_modules/jsharmony-db/node_modules,./node_modules/jsharmony-cms/node_modules,./node_modules/jsharmony-factory/node_modules,./node_modules/jsharmony/node_modules" --ext "node,js,json,css,ejs,sql"
 </pre>
 
 <h3>Linking jsHarmony Modules</h3>

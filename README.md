@@ -31,7 +31,7 @@ jsHarmony Tutorials Collection
    
 4. Start the tutorials by running:
    ````
-   nstart.cmd
+   jsharmony dev
    -- or --
    node app.js
    ````
